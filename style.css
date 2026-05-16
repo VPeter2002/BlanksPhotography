@@ -1,0 +1,281 @@
+/* --- 1. ALAPOK ÉS VÁLTOZÓK --- */
+:root {
+    --bg-color: #000000;
+    --text-color: #f4f4f4;
+    --font-serif: 'Playfair Display', serif;
+    --font-sans: 'Inter', sans-serif;
+    --accent: #a3895d;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+
+
+/* --- 2. NAVIGÁCIÓ ÉS MOBIL MENÜ --- */
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 20px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 1000;
+}
+
+.logo {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    color: white;
+    text-decoration: none;
+    z-index: 1002;
+}
+
+.logo span { font-style: italic; color: var(--accent); }
+
+/* Asztali menü lista */
+.nav-list { 
+    display: flex; 
+    list-style: none; 
+}
+
+.nav-list li { margin-left: 40px; }
+
+.nav-list li a {
+    text-decoration: none;
+    color: white;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: 0.3s;
+}
+
+.nav-list li a:hover, .nav-list li a.active { color: var(--accent); }
+
+/* Mobil Menu Toggle Gomb */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 6px;
+    z-index: 1002;
+}
+
+.menu-toggle .bar {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    transition: 0.3s;
+    border-radius: 2px;
+}
+
+/* --- 3. HERO SZEKCIÓ --- */
+.full-screen {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    
+    /* MEGSZÜNTETJÜK a középre igazítást függőlegesen: */
+    align-items: flex-start; 
+
+    /* Itt állítjuk be, hogy milyen mélyen legyen a nav alatt. 
+       A 20vh (a képernyőmagasság 20%-a) általában mindenhol jól mutat, 
+       de használhatsz fix pixelt is (pl. 180px). */
+    padding-top: 10vh; 
+
+    background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0) 60%, 
+        rgba(0, 0, 0, 1) 100%
+    ), url('Blanka1.jpg') center 35% / cover no-repeat;
+    
+    text-align: center;
+    position: relative;
+}
+
+.hero-content h1 {
+    font-family: var(--font-serif);
+    /* A clamp segít, hogy mobilon ne legyen túl nagy, de gépen látványos maradjon */
+    font-size: clamp(2.5rem, 8vw, 6rem); 
+    font-weight: 400;
+    font-style: italic;
+    letter-spacing: 2px;
+    color: #d39935; /* Az általad beállított arany szín */
+    margin: 0;}
+/* --- 4. SZEKCIÓK ÉS DINAMIKUS GALÉRIA --- */
+.section { padding: 100px 5%; }
+
+.section-title {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    margin-bottom: 50px;
+    font-style: italic;
+    color: white;
+    text-align: center;
+}
+
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+}
+
+.photo-item {
+    background: #0a0a0a;
+    border: 1px solid #1a1a1a;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    /* Ha fix arányt akarsz minden képnek, aktiváld: aspect-ratio: 4/5; */
+}
+
+.photo-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.photo-item:hover {
+    border-color: var(--accent);
+    transform: translateY(-5px);
+}
+
+.photo-item:hover img { transform: scale(1.05); }
+
+/* Űrlap visszajelző státusz üzenet */
+.form-status-message {
+    margin-top: 15px;
+    font-size: 0.95rem;
+    font-style: italic;
+    transition: 0.3s ease;
+    text-align: center;
+}
+
+.form-status-message.success {
+    color: #4caf50; /* Kellemes zöld a sikerhez */
+}
+
+.form-status-message.error {
+    color: #f44336; /* Figyelmeztető piros a hibához */
+}
+
+/* Letiltott gomb stílusa küldés közben */
+.submit-btn:disabled {
+    background: #555;
+    color: #aaa;
+    cursor: not-allowed;
+}
+
+/* --- 5. SZOLGÁLTATÁSOK --- */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.service-card {
+    background: #050505;
+    padding: 40px 20px;
+    border: 1px solid #1a1a1a;
+    border-radius: 12px;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s;
+}
+
+.service-card h3 { color: var(--accent); font-family: var(--font-serif); margin-bottom: 10px; }
+.service-card p { color: #ccc; font-size: 0.9rem; }
+
+/* --- 6. RÓLAM (ABOUT) --- */
+.about-container {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 60px;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.about-content h3 { font-family: var(--font-serif); color: var(--accent); margin-bottom: 20px; }
+.about-content p { color: #ccc; margin-bottom: 15px; }
+
+
+/* --- 7. Ajánlat kérés (Content) --- */
+.contact-form {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.contact-form input, .contact-form textarea {
+    background: #111;
+    border: 1px solid #333;
+    padding: 15px;
+    color: white;
+    font-family: var(--font-sans);
+    border-radius: 5px;
+}
+
+.submit-btn {
+    background: var(--accent);
+    color: white  ;
+    border: none;
+    border-radius: 5px;
+    padding: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.submit-btn:hover {
+    background: #a3895d
+}
+
+
+
+/* --- 8. MOBIL NÉZET (RESPONSIVE) --- */
+@media (max-width: 767px) {
+    .menu-toggle { display: flex; }
+
+    .nav-list {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.95);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition: 0.5s ease;
+    }
+
+    .nav-list.active { right: 0; }
+    .nav-list li { margin: 20px 0; }
+
+    .about-container { grid-template-columns: 1fr; text-align: center; }
+
+    /* Hamburger X animáció */
+    .menu-toggle.is-active .bar:nth-child(2) { opacity: 0; }
+    .menu-toggle.is-active .bar:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+    .menu-toggle.is-active .bar:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+}
