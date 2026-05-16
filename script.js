@@ -7,21 +7,32 @@ document.addEventListener('DOMContentLoaded', () => {
         link.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
 
-            // Ellenőrizzük, hogy a link belső horgony-e (vagyis '#' jellel kezdődik)
-            if (href.startsWith('#')) {
-                const targetElement = document.querySelector(href);
+            // Ha a link tartalmaz '#'-et (pl. '#about' vagy 'index.html#about')
+            if (href && href.includes('#')) {
+                const targetId = href.split('#')[1];
+                const targetElement = document.getElementById(targetId);
                 
+                // Ha az elem létezik a jelenlegi oldalon
                 if (targetElement) {
-                    e.preventDefault(); // Csak belső linknél állítjuk meg az ugrást
+                    const pageUrl = href.split('#')[0];
+                    const currentUrl = window.location.pathname.split('/').pop();
                     
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 70, 
-                        behavior: 'smooth'
-                    });
+                    // Ellenőrizzük, hogy a link erre az oldalra mutat-e (vagy csak sima '#' link)
+                    if (pageUrl === '' || pageUrl === currentUrl || (pageUrl === 'index.html' && currentUrl === '')) {
+                        e.preventDefault(); // Csak akkor állítjuk meg az ugrást, ha az adott oldalon vagyunk
+                        
+                        // Kiszámoljuk a pontos pozíciót a fix menü miatt
+                        const headerOffset = 80;
+                        const elementPosition = targetElement.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                        
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+                    }
                 }
             }
-            // Ha nem '#' jellel kezdődik (pl. gallery.html), 
-            // akkor nem fut le az e.preventDefault(), és a böngésző megnyitja az oldalt.
         });
     });
 
