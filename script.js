@@ -62,4 +62,30 @@ document.querySelectorAll('.nav-list a').forEach(link => {
 
     window.addEventListener('scroll', revealOnScroll);
     revealOnScroll(); 
+
+    // Lightbox funkcionalitás
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const closeBtn = document.querySelector('.lightbox-close');
+    const galleryImages = document.querySelectorAll('.gallery-image img');
+
+    if (lightbox && lightboxImg && closeBtn && galleryImages.length > 0) {
+        galleryImages.forEach(img => {
+            img.addEventListener('click', function() {
+                lightbox.style.display = "block";
+                lightboxImg.src = this.src;
+            });
+        });
+
+        closeBtn.addEventListener('click', function() {
+            lightbox.style.display = "none";
+        });
+
+        // Kattintás a lightbox hátterére is bezárja
+        lightbox.addEventListener('click', function(e) {
+            if (e.target === lightbox) {
+                lightbox.style.display = "none";
+            }
+        });
+    }
 });

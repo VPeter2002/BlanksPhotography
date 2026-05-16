@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portrék | Blank's Photography</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="footer.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+</head>
+<body class="gallery-page">
+
+    <nav id="main-nav">
+        <a href="index.html" class="logo">Blank's <span>Photography</span></a>
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+        <ul class="nav-list">
+            <li><a href="index.html">Kezdőlap</a></li>
+            <li><a href="gallery.html" class="active">Galéria</a></li>
+            <li><a href="index.html#about">Rólam</a></li>
+            <li><a href="index.html#contact">Kapcsolat</a></li>
+        </ul>
+    </nav>
+
+    <main class="section" style="padding-top: 150px;">
+        <div style="text-align: center; margin-bottom: 40px;">
+            <a href="gallery.html" style="color: var(--accent); text-decoration: none; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px;">&larr; Vissza a kategóriákhoz</a>
+            <h1 class="section-title" style="margin-top: 20px; margin-bottom: 10px;">Portrék</h1>
+            <p style="color: #ccc; max-width: 600px; margin: 0 auto;">Egyéniség és karakter minden képen. Mutasd meg a legjobb arcodat.</p>
+        </div>
+        
+        <div class="photo-grid" id="gallery-grid">
+            <!-- Portré képek -->
+            <div class="photo-item gallery-image">
+                <img src="https://images.unsplash.com/photo-1531746020798-e7953e3e8c5c?auto=format&fit=crop&w=800&q=80" alt="Portré fotó">
+            </div>
+            <div class="photo-item gallery-image">
+                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=80" alt="Női portré">
+            </div>
+            <div class="photo-item gallery-image">
+                <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=80" alt="Férfi portré">
+            </div>
+            <div class="photo-item gallery-image">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80" alt="Stúdió portré">
+            </div>
+            <div class="photo-item gallery-image">
+                <img src="https://images.unsplash.com/photo-1552374196-c4e7ffc6e126?auto=format&fit=crop&w=800&q=80" alt="Üzleti portré">
+            </div>
+            <div class="photo-item gallery-image">
+                <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=800&q=80" alt="Kreatív portré">
+            </div>
+        </div>
+    </main>
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <img class="lightbox-content" id="lightbox-img">
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-top-border"></div>
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3 class="footer-heading">NAVIGÁCIÓ</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Főoldal</a></li>
+                    <li><a href="index.html#contact">Kapcsolat</a></li>
+                    <li><a href="adatvedelem.html">Adatvédelmi Tájékoztató</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3 class="footer-heading">ELÉRHETŐSÉG</h3>
+                <div class="contact-info-list">
+                    <div class="contact-item">
+                        <div class="icon-circle">📞</div>
+                        <div class="contact-text">
+                            <span class="label">TELEFON</span>
+                            <span class="value">+36 70 123 45 67</span>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="icon-circle">✉️</div>
+                        <div class="contact-text">
+                            <span class="label">EMAIL</span>
+                            <span class="value">hello@blankaphotography.hu</span>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="icon-circle">🕒</div>
+                        <div class="contact-text">
+                            <span class="label">IDŐPONTOK</span>
+                            <span class="value">Szo–V: 10:00 – 15:00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <a href="adatvedelem.html">Adatvédelmi Tájékoztató</a>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

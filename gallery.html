@@ -5,21 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Galériák | Blank's Photography</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="footer.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 </head>
 <body class="gallery-page">
 
     <nav id="main-nav">
         <a href="index.html" class="logo">Blank's <span>Photography</span></a>
-        <ul>
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+        <ul class="nav-list">
             <li><a href="index.html">Kezdőlap</a></li>
             <li><a href="gallery.html" class="active">Galéria</a></li>
+            <li><a href="index.html#about">Rólam</a></li>
             <li><a href="index.html#contact">Kapcsolat</a></li>
         </ul>
     </nav>
 
-    <main class="section">
-        <h1 class="section-title">Portfólió</h1>
+    <main class="section reveal" style="padding-top: 150px;">
+        <h1 class="section-title">Portfólió Kategóriák</h1>
+        <p style="text-align: center; color: #ccc; max-width: 600px; margin: -30px auto 50px auto;">Válassz az alábbi galériák közül, hogy megtekinthesd a legkedvesebb pillanatokat.</p>
         
         <div class="category-grid">
             <!-- Esküvő kategória -->
@@ -27,7 +35,7 @@
                 <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80')"></div>
                 <div class="category-info">
                     <h3>Esküvők</h3>
-                    <p>Az érzelmek és a nagy nap pillanatai</p>
+                    <p>Az érzelmek és a nagy nap</p>
                 </div>
             </a>
 
@@ -36,7 +44,7 @@
                 <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1531746020798-e7953e3e8c5c?auto=format&fit=crop&w=800&q=80')"></div>
                 <div class="category-info">
                     <h3>Portrék</h3>
-                    <p>Egyéniség és karakter minden képen</p>
+                    <p>Egyéniség és karakter</p>
                 </div>
             </a>
 
@@ -45,11 +53,55 @@
                 <div class="category-image" style="background-image: url('https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=800&q=80')"></div>
                 <div class="category-info">
                     <h3>Események</h3>
-                    <p>Koncertek, partik és céges rendezvények</p>
+                    <p>Koncertek, partik, események</p>
                 </div>
             </a>
         </div>
     </main>
+
+    <footer class="site-footer">
+        <div class="footer-top-border"></div>
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3 class="footer-heading">NAVIGÁCIÓ</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Főoldal</a></li>
+                    <li><a href="index.html#contact">Kapcsolat</a></li>
+                    <li><a href="adatvedelem.html">Adatvédelmi Tájékoztató</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3 class="footer-heading">ELÉRHETŐSÉG</h3>
+                <div class="contact-info-list">
+                    <div class="contact-item">
+                        <div class="icon-circle">📞</div>
+                        <div class="contact-text">
+                            <span class="label">TELEFON</span>
+                            <span class="value">+36 70 123 45 67</span>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="icon-circle">✉️</div>
+                        <div class="contact-text">
+                            <span class="label">EMAIL</span>
+                            <span class="value">hello@blankaphotography.hu</span>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="icon-circle">🕒</div>
+                        <div class="contact-text">
+                            <span class="label">IDŐPONTOK</span>
+                            <span class="value">Szo–V: 10:00 – 15:00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <a href="adatvedelem.html">Adatvédelmi Tájékoztató</a>
+        </div>
+    </footer>
 
     <script src="script.js"></script>
 </body>
