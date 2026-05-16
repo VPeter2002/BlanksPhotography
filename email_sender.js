@@ -16,7 +16,7 @@ if (form) {
         
         // !!! IDE MÁSOLD BE A FORMSPREE-TŐL KAPOTT SAJÁT LINKEDET !!!
 
-        const formspreeUrl = "https://formspree.io/f/mdabqbba";
+        const formspreeUrl = "https://formspree.io/f/mdabqbba" ;
         
 
         try {
