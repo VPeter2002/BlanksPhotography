@@ -96,7 +96,7 @@ nav {
         to bottom,
         rgba(0, 0, 0, 0) 60%, 
         rgba(0, 0, 0, 1) 100%
-    ), url('Blanka1.jpg') center 35% / cover no-repeat;
+    ), url('https://lyagqwuqzurkkvcnjqtg.supabase.co/storage/v1/object/public/Blanka%20pics/Blanka1.jpg') center 35% / cover no-repeat;
     
     text-align: center;
     position: relative;
@@ -136,7 +136,8 @@ nav {
     overflow: hidden;
     cursor: pointer;
     transition: all 0.3s ease;
-    /* Ha fix arányt akarsz minden képnek, aktiváld: aspect-ratio: 4/5; */
+    width: 100%;
+    aspect-ratio: 4/5;
 }
 
 .photo-item img {
@@ -190,7 +191,6 @@ nav {
     padding: 40px 20px;
     border: 1px solid #1a1a1a;
     border-radius: 12px;
-    aspect-ratio: 1 / 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -198,8 +198,20 @@ nav {
     transition: 0.3s;
 }
 
-.service-card h3 { color: var(--accent); font-family: var(--font-serif); margin-bottom: 10px; }
-.service-card p { color: #ccc; font-size: 0.9rem; }
+.service-card h3 { 
+    color: var(--accent); 
+    font-family: var(--font-serif); 
+    margin-bottom: 15px; 
+    text-align: center;
+}
+
+.service-card p { 
+    color: #e0e0e0; 
+    font-size: 0.9rem; 
+    text-align: center;
+    line-height: 1.6;
+    padding: 15px 20px 25px 20px;
+}
 
 /* --- 6. RÓLAM (ABOUT) --- */
 .about-container {
@@ -543,20 +555,26 @@ nav {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 3rem;
-    color: #fff;
+    font-size: 40px;
+    color: white;
+    background: transparent;
+    border: none;
     font-weight: 300;
     cursor: pointer;
-    transition: color 0.3s;
-    padding: 20px;
+    transition: all 0.3s ease;
+    padding: 15px 20px;
+    border-radius: 50%;
     user-select: none;
     z-index: 2010;
 }
 
-.lightbox-prev { left: 20px; }
-.lightbox-next { right: 20px; }
+.lightbox-prev { left: 30px; }
+.lightbox-next { right: 30px; }
 
-.lightbox-prev:hover, .lightbox-next:hover { color: var(--accent); }
+.lightbox-prev:hover, .lightbox-next:hover {
+    color: var(--accent);
+    background: rgba(0, 0, 0, 0.6);
+}
 
 /* Mobil finomítás a nyilakhoz */
 @media (max-width: 767px) {
@@ -576,3 +594,40 @@ nav {
     .photo-grid, .subphoto-grid { column-count: 1; }
     .services-grid, .category-grid { grid-template-columns: 1fr; }
 }
+
+/* --- 11. HIGHLIGHTS (KIEMELT PILLANATOK) MONTÁZS --- */
+.highlights-grid {
+    column-count: 5;
+    column-gap: 12px;
+    width: 100%;
+}
+
+.highlight-item {
+    break-inside: avoid;
+    margin-bottom: 12px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.highlight-item.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.highlight-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 6px;
+    transition: transform 0.4s ease;
+}
+
+.highlight-item:hover img {
+    transform: scale(1.05);
+}
+
+@media (max-width: 992px) { .highlights-grid { column-count: 3; } }
+@media (max-width: 576px) { .highlights-grid { column-count: 2; column-gap: 8px; } .highlight-item { margin-bottom: 8px; } }
