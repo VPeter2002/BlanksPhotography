@@ -12,9 +12,9 @@ export default async function handler(req, res) {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${process.env.RESEND_API_KEY}`
       },
-      body: JSON.stringify({
-        from: 'onboarding@resend.dev', // A Resend ingyenes teszt címe
-        to: ['peter.veszpremi2002@gmail.com'], // IDE ÍRD BE A SAJÁT EMAIL CÍMEDET!
+     body: JSON.stringify({
+        from: 'Blanka Photography <onboarding@resend.dev>',
+        to: ['peter.veszpremi2002@gmail.com'], // Ide megy a levél
         reply_to: email,
         subject: `Új megkeresés a weboldalról: ${nev}`,
         html: `
@@ -24,7 +24,8 @@ export default async function handler(req, res) {
           <p><strong>Üzenet:</strong><br>${uzenet}</p>
         `
       })
-    });
+      })
+    ;
 
     const data = await response.json();
 
