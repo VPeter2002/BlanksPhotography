@@ -172,48 +172,44 @@
 
     <script src="script.js"></script>
     <script>
-        // Eseménykezelő a kapcsolati űrlaphoz, ami az /api/send-email végpontot használja
-        document.addEventListener('DOMContentLoaded', () => {
-            const contactForm = document.getElementById('contactForm');
-            if (contactForm) {
-                const submitBtn = document.getElementById('submit-btn');
-                const formStatus = document.getElementById('form-status');
+        document.getElementById('contactForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
 
-                contactForm.addEventListener('submit', async (e) => {
-                    e.preventDefault();
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerText;
+            submitBtn.innerText = 'Küldés...';
+            submitBtn.disabled = true;
 
-                    const originalBtnText = submitBtn.innerText;
-                    submitBtn.disabled = true;
-                    submitBtn.innerText = 'Küldés folyamatban...';
-                    formStatus.innerText = '';
-                    formStatus.className = 'form-status-message';
+            const formData = {
+                nev: this.nev.value,
+                email: this.email.value,
+                uzenet: this.uzenet.value
+            };
 
-                    const formData = new FormData(contactForm);
-                    const data = Object.fromEntries(formData.entries());
-
-                    try {
-                        const response = await fetch('/api/send-email', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(data)
-                        });
-
-                        if (response.ok) {
-                            formStatus.innerText = 'Köszönöm, az üzenetét sikeresen elküldtük!';
-                            formStatus.classList.add('success');
-                            submitBtn.innerText = 'Sikeres küldés!';
-                            contactForm.reset();
-                            // A gomb letiltva marad, hogy elkerüljük a dupla küldést.
-                        } else {
-                            throw new Error('A szerver hibát adott vissza.');
-                        }
-                    } catch (error) {
-                        formStatus.innerText = 'Hoppá! Hiba történt a küldés során. Kérjük, próbálja újra később.';
-                        formStatus.classList.add('error');
-                        submitBtn.disabled = false;
-                        submitBtn.innerText = originalBtnText;
-                    }
+            try {
+                const response = await fetch('/api/send-email', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
                 });
+
+                if (response.ok) {
+                    submitBtn.innerText = 'Sikeresen elküldve!';
+                    this.reset();
+                    setTimeout(() => {
+                        submitBtn.innerText = originalText;
+                        submitBtn.disabled = false;
+                    }, 3000);
+                } else {
+                    throw new Error('Hiba történt a küldés során.');
+                }
+            } catch (error) {
+                console.error(error);
+                submitBtn.innerText = 'Hiba! Próbáld újra.';
+                setTimeout(() => {
+                    submitBtn.innerText = originalText;
+                    submitBtn.disabled = false;
+                }, 3000);
             }
         });
     </script>
