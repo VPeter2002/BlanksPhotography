@@ -271,6 +271,24 @@
         }
 
         document.addEventListener('DOMContentLoaded', betoltHighlights);
+
+        // Okos görgetés a horgony linkekhez (layout shift korrigálása lazy load esetén)
+        document.querySelectorAll('a[href*="#"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                const targetId = href.split('#')[1];
+                const targetElement = document.getElementById(targetId);
+                
+                if (targetElement) {
+                    e.preventDefault();
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                    
+                    setTimeout(() => {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                    }, 500);
+                }
+            });
+        });
     </script>
 </body>
 </html>
