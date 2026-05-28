@@ -13,8 +13,8 @@ export default async function handler(req, res) {
         'Authorization': `Bearer ${process.env.RESEND_API_KEY}`
       },
       body: JSON.stringify({
-        from: 'Blanka Photography <onboarding@resend.dev>', // A Resend ingyenes teszt címe
-        to: ['A_TE_EMAIL_CIMED@GMAIL.COM'], // IDE ÍRD BE A SAJÁT EMAIL CÍMEDET!
+        from: 'onboarding@resend.dev', // A Resend ingyenes teszt címe
+        to: ['peter.veszpremi2002@gmail.com'], // IDE ÍRD BE A SAJÁT EMAIL CÍMEDET!
         reply_to: email,
         subject: `Új megkeresés a weboldalról: ${nev}`,
         html: `
