@@ -120,6 +120,21 @@
         console.log("Talált képek száma:", data.length);
         kepekLista = []; // Lista ürítése újratöltés esetén
 
+        // Intersection Observer a lusta betöltéshez és az animációhoz
+        const observer = new IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const item = entry.target;
+                    item.classList.add('visible'); // Animáció indítása
+                    const img = item.querySelector('img');
+                    if (img && img.dataset.src) {
+                        img.src = img.dataset.src; // Kép tényleges letöltése a data-src-ből
+                    }
+                    obs.unobserve(item); // Ha egyszer betöltött és látható, nem figyeljük tovább
+                }
+            });
+        }, { threshold: 0.1 });
+
         data.forEach(file => {
             // Csak a képfájlokat jelenítjük meg
             if (file.name.endsWith('.jpg') || file.name.endsWith('.png') || file.name.endsWith('.webp') || file.name.endsWith('.jpeg')) {
@@ -137,7 +152,7 @@
                 // HTML elem létrehozása
                 const item = document.createElement('div');
                 item.className = 'subphoto-item';
-                item.innerHTML = `<img src="${imageUrl}" alt="Esküvői pillanat – ${file.name}" loading="lazy">`;
+                item.innerHTML = `<img data-src="${imageUrl}" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="Esküvői pillanat – ${file.name}" loading="lazy">`;
                 
                 // Kattintás esemény hozzáadása a Lightboxhoz
                 item.addEventListener('click', () => {
@@ -147,6 +162,7 @@
                 });
 
                 grid.appendChild(item);
+                observer.observe(item); // Az új elem figyelése
             }
         });
     }
