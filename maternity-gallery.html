@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Esküvői Galériák | Blank's Photography</title>
+    <title>Kismama Galériák | Blank's Photography</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="footer.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&family=Inter:wght@300;400&display=swap" rel="stylesheet">
@@ -24,10 +24,10 @@
             <a href="gallery.html">← Vissza a kategóriákhoz</a>
         </div>
 
-        <h1 class="section-title">Esküvői Történetek</h1>
+        <h1 class="section-title">Kismama Történetek</h1>
         <div class="stories-grid">
             <div class="story-bucket">
-                <h3 class="story-title">Esküvői pillanatok</h3>
+                <h3 class="story-title">Kismama pillanatok</h3>
                 
                 <div class="subphoto-grid" id="photo-container"></div>
             </div>
@@ -84,7 +84,7 @@
     const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx5YWdxd3VxenVya2t2Y25qcXRnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5MDE2NzIsImV4cCI6MjA5NTQ3NzY3Mn0.tuoGksKYjjiaohdTaNt_vvnY1mB9IUpoQC3cAqA9-tU'; 
     
     const bucketName = 'Blanka pics'; // A frissített vödör neved
-    const folderName = 'saratamas_eskuvo';            
+    const folderName = 'saramarnagyonvarnak_kismama';            
 
     // A JAVÍTÁS: supabaseClient névre kereszteltük a változót
     const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
@@ -137,7 +137,7 @@
                 // HTML elem létrehozása
                 const item = document.createElement('div');
                 item.className = 'subphoto-item';
-                item.innerHTML = `<img src="${imageUrl}" alt="Esküvői pillanat – ${file.name}" loading="lazy">`;
+                item.innerHTML = `<img src="${imageUrl}" alt="Kismama pillanat – ${file.name}" loading="lazy">`;
                 
                 // Kattintás esemény hozzáadása a Lightboxhoz
                 item.addEventListener('click', () => {
@@ -166,7 +166,7 @@
 
         const aktKep = kepekLista[aktualisIndex];
         lightboxImg.src = aktKep.url;
-        lightboxCaption.innerText = "Esküvői pillanat";
+        lightboxCaption.innerText = "Kismama pillanat";
     }
 
     // Navigációs gombok eseménykezelői

@@ -181,7 +181,7 @@ nav {
 /* --- 5. SZOLGÁLTATÁSOK --- */
 .services-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 30px;
 }
 
@@ -322,7 +322,7 @@ nav {
 /* --- 10. KATEGÓRIA KÁRTYÁK (GALÉRIA FŐOLDAL) --- */
 .category-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 40px;
     max-width: 1200px;
     margin: 0 auto;
@@ -388,4 +388,184 @@ nav {
     color: var(--accent);
     text-decoration: none;
     cursor: pointer;
+}
+
+/* --- ALGALÉRIA ÉS LIGHTBOX STÍLUSOK --- */
+.subgallery-main {
+    padding-top: 140px;
+    padding-left: 2%; /* Felülírjuk az eredeti nagy margót, hogy szélesebb lehessen a tartalom */
+    padding-right: 2%;
+}
+
+.back-nav {
+    max-width: 100%; /* Alkalmazkodik a megnövelt szélességhez */
+    margin: 20px auto 40px auto;
+    text-align: center;
+}
+
+.back-nav a {
+    color: #888;
+    text-decoration: none;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    transition: 0.3s;
+}
+
+.back-nav a:hover {
+    color: #fff;
+}
+
+.stories-grid {
+    max-width: 100%; /* Eltávolítjuk a 1200px-es korlátot, hogy a képek szétterülhessenek */
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+}
+
+.story-title {
+    font-family: var(--font-serif);
+    font-size: 1.8rem;
+    font-weight: 400;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #111;
+    padding-bottom: 10px;
+}
+
+.story-title span {
+    font-size: 1rem;
+    font-family: var(--font-sans);
+    color: #666;
+    margin-left: 15px;
+}
+
+/* Képek elrendezése a projekten belül */
+.subphoto-grid {
+    column-count: 3;
+    column-gap: 20px;
+}
+
+.subphoto-item {
+    background: #050505;
+    border-radius: 8px;
+    border: 1px solid #1a1a1a;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.4s ease, transform 0.4s ease;
+    break-inside: avoid;
+    margin-bottom: 20px;
+}
+
+.subphoto-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.subphoto-item:hover {
+    border-color: var(--accent);
+    transform: translateY(-3px);
+}
+
+.subphoto-item:hover img {
+    transform: scale(1.05);
+}
+
+/* --- LIGHTBOX (NAGYÍTOTT KÉP ABLAK) --- */
+.lightbox-modal {
+    display: flex;
+    position: fixed;
+    z-index: 2000;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.95);
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+
+.lightbox-active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.lightbox-content {
+    max-width: 90%;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 4px;
+    transform: scale(0.95);
+    transition: transform 0.4s ease;
+}
+
+.lightbox-active .lightbox-content {
+    transform: scale(1);
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    color: #fff;
+    font-size: 2.5rem;
+    font-weight: 300;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.lightbox-close:hover {
+    color: var(--accent);
+}
+
+.lightbox-caption {
+    margin-top: 20px;
+    color: #888;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    font-family: var(--font-sans);
+}
+
+/* --- LIGHTBOX LAPOZÓ NYILAK --- */
+.lightbox-prev,
+.lightbox-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 3rem;
+    color: #fff;
+    font-weight: 300;
+    cursor: pointer;
+    transition: color 0.3s;
+    padding: 20px;
+    user-select: none;
+    z-index: 2010;
+}
+
+.lightbox-prev { left: 20px; }
+.lightbox-next { right: 20px; }
+
+.lightbox-prev:hover, .lightbox-next:hover { color: var(--accent); }
+
+/* Mobil finomítás a nyilakhoz */
+@media (max-width: 767px) {
+    .lightbox-prev, .lightbox-next {
+        font-size: 2rem;
+        padding: 10px;
+    }
+}
+
+/* --- MASONRY GRID MOBIL NÉZET --- */
+@media (max-width: 992px) {
+    .photo-grid, .subphoto-grid { column-count: 2; }
+    .services-grid, .category-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 576px) {
+    .photo-grid, .subphoto-grid { column-count: 1; }
+    .services-grid, .category-grid { grid-template-columns: 1fr; }
 }
