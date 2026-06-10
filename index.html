@@ -6,33 +6,55 @@
     <title>Blank's Photography | Portfólió</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="footer.css">
-        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&family=Inter:wght@300;400&display=swap" rel="stylesheet">
-
     <!-- Google Fonts a prémium megjelenéshez -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
 </head>
 <body>
 
     <nav id="main-nav">
-        <!-- A logót linkké alakítottuk, hogy kattintható legyen -->
-        <a href="#hero" class="logo">Blank's <span>Photography</span></a>
+        <a href="#hero" class="logo mobile-logo">Blank's <span>Photography</span></a>
         <div class="menu-toggle" id="mobile-menu">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
-    </div>
-       <ul class="nav-list">
-        <li><a href="index.html">Kezdőlap</a></li>
-        <li><a href="gallery.html">Galéria</a></li>
-        <li><a href="index.html#about">Rólam</a></li>
-        <li><a href="index.html#contact">Kapcsolat</a></li>
-    </ul>
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+        <div class="nav-list">
+            <ul class="nav-left">
+                <li><a href="index.html">Kezdőlap</a></li>
+                <li><a href="gallery.html">Galéria</a></li>
+            </ul>
+            <a href="#hero" class="logo desktop-logo">Blank's <span>Photography</span></a>
+            <ul class="nav-right">
+                <li><a href="index.html#about">Rólam</a></li>
+                <li><a href="index.html#contact">Kapcsolat</a></li>
+            </ul>
+        </div>
     </nav>
 
     <!-- Hero szekció -->
-    <section id="hero" class="full-screen">
-        <div class="hero-content">
-            <h1 style="color: #a3895d; height: 14cap;">Capture the Moment</h1>
+    <section id="hero" class="hero-split">
+        <div class="hero-text-content">
+            <h1>Felejthetetlen Történetek</h1>
+            <h2>Wedding &amp; Portrait Photography</h2>
+            <p>Fedezd fel a letisztult, elegáns formavilágot, ahol a természetes fények és a valódi érzelmek találkoznak. Célom, hogy időtálló emlékeket teremtsek a legszebb pillanatokról, feszengés nélkül.</p>
+            <a href="#contact" class="submit-btn hero-btn">KAPCSOLAT &rarr;</a>
         </div>
+        <div class="hero-collage">
+            <div class="collage-wrapper collage-wrapper-tall">
+                <img src="https://lyagqwuqzurkkvcnjqtg.supabase.co/storage/v1/object/public/Blanka%20pics/Sara__Tamas_361.jpg" alt="Fő portré" class="collage-img">
+            </div>
+            <div class="collage-wrapper collage-wrapper-landscape">
+                <img src="https://lyagqwuqzurkkvcnjqtg.supabase.co/storage/v1/object/public/Blanka%20pics/saba_tomo_fani1_kisebb.jpg" alt="Tájkép hangulat" class="collage-img">
+            </div>
+            <div class="collage-wrapper collage-wrapper-square1">
+                <img src="https://lyagqwuqzurkkvcnjqtg.supabase.co/storage/v1/object/public/Blanka%20pics/Sara_66.jpg" alt="Részlet 1" class="collage-img">
+            </div>
+            <div class="collage-wrapper collage-wrapper-square2">
+                <img src="https://lyagqwuqzurkkvcnjqtg.supabase.co/storage/v1/object/public/Blanka%20pics/jegyes_11_kissebb.jpg" alt="Részlet 2" class="collage-img">
+            </div>
+            </div>
     </section>
 
    <!-- Szolgáltatások Szekció frissített kategóriákkal -->
