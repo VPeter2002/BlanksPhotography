@@ -33,31 +33,37 @@
         </div>
     </nav>
 
-    <!-- Hero szekció -->
-    <section id="hero" class="hero-split">
-        <div class="hero-text-content">
-            <h1>Felejthetetlen Történetek</h1>
-            <h2>Wedding &amp; Portrait Photography</h2>
-            <p>Fedezd fel a letisztult, elegáns formavilágot, ahol a természetes fények és a valódi érzelmek találkoznak. Célom, hogy időtálló emlékeket teremtsek a legszebb pillanatokról, feszengés nélkül.</p>
-            <a href="#contact" class="submit-btn hero-btn">KAPCSOLAT &rarr;</a>
+    <!-- Hero Szekció: Teljes képernyős Slider -->
+    <section id="hero" class="hero-slider">
+        <div class="slider-images">
+            <div class="slide active">
+                <img src="https://lyagqwuqzurkkvcnjqtg.supabase.co/storage/v1/object/public/Blanka%20pics/Sara__Tamas_361.jpg" alt="Esküvői fotó 1">
+                <img src="https://lyagqwuqzurkkvcnjqtg.supabase.co/storage/v1/object/public/Blanka%20pics/saba_tomo_fani1_kisebb.jpg" alt="Esküvői fotó 2">
+                <img src="https://lyagqwuqzurkkvcnjqtg.supabase.co/storage/v1/object/public/Blanka%20pics/jegyes_11_kissebb.jpg" alt="Esküvői fotó 3">
+            </div>
+            <div class="slide">
+                <img src="https://lyagqwuqzurkkvcnjqtg.supabase.co/storage/v1/object/public/Blanka%20pics/Sara_66.jpg" alt="Portré fotó 1">
+                <img src="https://lyagqwuqzurkkvcnjqtg.supabase.co/storage/v1/object/public/Blanka%20pics/blanka2.jpg" alt="Portré fotó 2">
+                <img src="https://lyagqwuqzurkkvcnjqtg.supabase.co/storage/v1/object/public/Blanka%20pics/saba_tomo_fani1_kisebb.jpg" alt="Portré fotó 3">
+            </div>
+            <div class="slide">
+                <img src="https://lyagqwuqzurkkvcnjqtg.supabase.co/storage/v1/object/public/Blanka%20pics/jegyes_11_kissebb.jpg" alt="Jegyes fotó 1">
+                <img src="https://lyagqwuqzurkkvcnjqtg.supabase.co/storage/v1/object/public/Blanka%20pics/Sara_66.jpg" alt="Jegyes fotó 2">
+                <img src="https://lyagqwuqzurkkvcnjqtg.supabase.co/storage/v1/object/public/Blanka%20pics/Sara__Tamas_361.jpg" alt="Jegyes fotó 3">
+            </div>
         </div>
-        <div class="hero-collage">
-            <div class="collage-wrapper collage-wrapper-tall">
-                <img src="https://lyagqwuqzurkkvcnjqtg.supabase.co/storage/v1/object/public/Blanka%20pics/Sara__Tamas_361.jpg" alt="Fő portré" class="collage-img">
-            </div>
-            <div class="collage-wrapper collage-wrapper-landscape">
-                <img src="https://lyagqwuqzurkkvcnjqtg.supabase.co/storage/v1/object/public/Blanka%20pics/saba_tomo_fani1_kisebb.jpg" alt="Tájkép hangulat" class="collage-img">
-            </div>
-            <div class="collage-wrapper collage-wrapper-square1">
-                <img src="https://lyagqwuqzurkkvcnjqtg.supabase.co/storage/v1/object/public/Blanka%20pics/Sara_66.jpg" alt="Részlet 1" class="collage-img">
-            </div>
-            <div class="collage-wrapper collage-wrapper-square2">
-                <img src="https://lyagqwuqzurkkvcnjqtg.supabase.co/storage/v1/object/public/Blanka%20pics/jegyes_11_kissebb.jpg" alt="Részlet 2" class="collage-img">
-            </div>
-            </div>
+        <div class="slider-text">
+            <h1>Felejthetetlen Vizuális Történetek</h1>
+            <h2>Wedding &amp; Portrait Photography</h2>
+        </div>
+        <!-- Slider Navigációs Nyilak -->
+        <button class="slider-arrow prev" id="prev-slide">&#10094;</button>
+        <button class="slider-arrow next" id="next-slide">&#10095;</button>
     </section>
 
+    
    <!-- Szolgáltatások Szekció frissített kategóriákkal -->
+    <!--
 <section id="services" class="section reveal">
     <h2 class="section-title">Amiben segíthetek</h2>
    <div class="services-grid">
@@ -93,8 +99,8 @@
         <p>A kettőtök közötti összhang megörökítése természetes környezetben, feszengés nélkül.</p>
     </div>
 </div>
-</section>
-
+</section>>
+ -->
 
 
    
@@ -292,7 +298,52 @@
             }
         }
 
-        document.addEventListener('DOMContentLoaded', betoltHighlights);
+        document.addEventListener('DOMContentLoaded', () => {
+            betoltHighlights();
+
+            // --- HERO SLIDER LOGIKA ---
+            const slides = document.querySelectorAll('.hero-slider .slide');
+            const prevBtn = document.getElementById('prev-slide');
+            const nextBtn = document.getElementById('next-slide');
+
+            if (slides.length > 1) {
+                let currentSlide = 0;
+                let slideInterval;
+
+                const showSlide = (index) => {
+                    slides.forEach((slide, i) => {
+                        slide.classList.remove('active');
+                        if (i === index) {
+                            slide.classList.add('active');
+                        }
+                    });
+                };
+
+                const nextSlide = () => {
+                    currentSlide = (currentSlide + 1) % slides.length;
+                    showSlide(currentSlide);
+                };
+
+                const prevSlide = () => {
+                    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+                    showSlide(currentSlide);
+                };
+
+                const startSlider = () => {
+                    slideInterval = setInterval(nextSlide, 5000); // 5 másodpercenként vált
+                };
+
+                const resetSlider = () => {
+                    clearInterval(slideInterval);
+                    startSlider();
+                };
+
+                nextBtn.addEventListener('click', () => { nextSlide(); resetSlider(); });
+                prevBtn.addEventListener('click', () => { prevSlide(); resetSlider(); });
+
+                startSlider(); // Elindítjuk az automatikus lapozást
+            }
+        });
 
         // Okos görgetés a horgony linkekhez (layout shift korrigálása lazy load esetén)
         document.querySelectorAll('a[href*="#"]').forEach(link => {
