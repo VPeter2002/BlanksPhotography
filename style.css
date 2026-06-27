@@ -96,7 +96,7 @@ nav {
     width: 95%;
     max-width: 1400px;
     height: 80vh; /* Kisebb magasság, hogy a kártya ne töltse ki a teljes képernyőt */
-    margin: 120px auto 60px; /* Felül 120px a navi miatt, alul 60px térköz, oldalt auto a középre igazításhoz */
+    margin: 120px auto 20px; /* Térköz csökkentése: alul 20px */
 
     /* ÚJ: Lekerekítés és árnyék a prémium megjelenésért */
     overflow: hidden; /* Fontos, hogy a képek ne lógjanak ki a lekerekített sarkokból */
@@ -212,10 +212,15 @@ nav {
     font-style: italic; /* Illik az oldal elegáns stílusához */
     max-width: 600px; /* Jobb olvashatóság érdekében */
     padding: 0 20px; /* Mobilon ne érjen a képernyő széléhez */
-    margin: 40px auto; /* 40px függőleges margó és horizontális középre igazítás */
+    margin: 30px auto; /* Szimmetrikus 30px-es térköz */
 }
 /* --- 4. SZEKCIÓK ÉS DINAMIKUS GALÉRIA --- */
 .section { padding: 100px 5%; }
+
+/* Kiemelt pillanatok szekció egyedi térköze */
+.highlights-section {
+    padding-top: 40px;
+}
 
 .section-title {
     font-family: var(--font-serif);
