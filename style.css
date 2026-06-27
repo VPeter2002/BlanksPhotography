@@ -201,6 +201,19 @@ nav {
     color: var(--accent-rose);
     background-color: rgba(251, 249, 246, 0.1);
 }
+
+/* Köszöntő szöveg a slider alatt */
+.welcome-text {
+    text-align: center;
+    font-family: var(--font-serif);
+    font-size: 20px;
+    color: var(--text-dark);
+    line-height: 1.7;
+    font-style: italic; /* Illik az oldal elegáns stílusához */
+    max-width: 600px; /* Jobb olvashatóság érdekében */
+    padding: 0 20px; /* Mobilon ne érjen a képernyő széléhez */
+    margin: 40px auto; /* 40px függőleges margó és horizontális középre igazítás */
+}
 /* --- 4. SZEKCIÓK ÉS DINAMIKUS GALÉRIA --- */
 .section { padding: 100px 5%; }
 
