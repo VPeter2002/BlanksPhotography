@@ -396,6 +396,16 @@ nav {
     .menu-toggle.is-active .bar:nth-child(1) { transform: translateY(9px) rotate(45deg); }
     .menu-toggle.is-active .bar:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
 
+    /* Hero Slider mobil nézet korrekciók */
+    .hero-slider {
+        /* A magasságot a viewport szélességéhez kötjük, hogy a 3/4-es képarány megmaradjon */
+        /* Kiszámítás: (95vw szélesség / 3 kép) * (4/3 arány) ≈ 42.2vw */
+        height: 42.2vw;
+        max-height: 500px; /* Megakadályozza, hogy túl magas legyen tableteken */
+        min-height: 300px; /* Megakadályozza, hogy túl lapos legyen nagyon keskeny képernyőn */
+        margin: 100px auto 40px; /* Kisebb margók mobilon */
+    }
+
     .slider-arrow {
         font-size: 2rem;
         padding: 5px 10px;
@@ -472,9 +482,17 @@ nav {
     width: 100%;
     height: 100%;
     background-size: cover;
-    background: linear-gradient(to top, rgba(251, 249, 246, 0.9) 0%, rgba(251, 249, 246, 0) 100%);
     background-position: center;
     transition: transform 0.6s ease;
+}
+
+.category-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(251, 249, 246, 0.8) 0%, rgba(251, 249, 246, 0) 70%);
+    z-index: 1;
+    transition: background 0.4s ease;
 }
 
 .category-card:hover {
@@ -495,6 +513,7 @@ nav {
     background: transparent;
     text-align: center;
     color: var(--text-dark);
+    z-index: 2;
 }
 
 .category-info h3 {
