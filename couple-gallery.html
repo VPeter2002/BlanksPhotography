@@ -51,7 +51,10 @@
     <div id="lightbox" class="lightbox-modal">
         <span class="lightbox-close">&times;</span>
         <span class="lightbox-prev">&#10094;</span>
-        <img class="lightbox-content" id="lightbox-img" src="" alt="Nagyított kép">
+        <picture>
+            <source id="lightbox-source" type="image/webp" srcset="">
+            <img class="lightbox-content" id="lightbox-img" src="" alt="Nagyított kép">
+        </picture>
         <span class="lightbox-next">&#10095;</span>
         <div class="lightbox-caption" id="lightbox-caption"></div>
     </div>
@@ -106,6 +109,7 @@
     // Lightbox elemek kijelölése
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxSource = document.getElementById('lightbox-source');
     const lightboxCaption = document.getElementById('lightbox-caption');
     const closeBtn = document.querySelector('.lightbox-close');
     const prevBtn = document.querySelector('.lightbox-prev');
@@ -115,15 +119,56 @@
     let kepekLista = [];
     let aktualisIndex = 0;
 
+    const RACS_SIZES = "(max-width: 600px) 45vw, (max-width: 1000px) 30vw, 450px";
+    const URES_PIXEL = "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=";
+
+    function nevKiterjesztesNelkul(nev) {
+        return nev.replace(/\.[^.]+$/, '');
+    }
+
+    // Egy kép 5 fájlt jelent a mappában (eredeti + thumb/medium x2), ezért
+    // egyetlen list()-hívás limitje kevés lehet — lapozva kérjük le mindet.
+    async function listaOsszesFajl(mappa) {
+        let osszes = [];
+        let offset = 0;
+        while (true) {
+            const { data, error } = await supabaseClient.storage.from(bucketName).list(mappa, {
+                limit: 1000,
+                offset,
+                sortBy: { column: 'name', order: 'asc' }
+            });
+            if (error) return { data: null, error };
+            if (!data || data.length === 0) break;
+            osszes = osszes.concat(data);
+            if (data.length < 1000) break;
+            offset += 1000;
+        }
+        return { data: osszes, error: null };
+    }
+
+    // A scripts/optimize-images.js build-script által legenerált manifest.json
+    // tartalmazza a képek valós méretét (layout shift ellen) és egy elmosott
+    // előnézetét (blur-up placeholder) — kép letöltése nélkül.
+    async function betoltManifest() {
+        const { data } = supabaseClient.storage.from(bucketName).getPublicUrl(`${folderName}/manifest.json`);
+        try {
+            const res = await fetch(data.publicUrl);
+            if (!res.ok) return {};
+            return await res.json();
+        } catch {
+            return {};
+        }
+    }
+
     // Képek automatikus lekérése és megjelenítése
     async function betoltKepek() {
         const grid = document.getElementById('photo-container');
         console.log("Megpróbálom lekérni a képeket a Supabase-ből...");
 
-        const { data, error } = await supabaseClient.storage.from(bucketName).list(folderName, {
-            limit: 200,
-            sortBy: { column: 'name', order: 'asc' }
-        });
+        const [{ data, error }, manifest] = await Promise.all([
+            listaOsszesFajl(folderName),
+            betoltManifest()
+        ]);
 
         if (error) {
             console.error('Hiba a Supabase lekérés során:', error);
@@ -140,45 +185,89 @@
                 if (entry.isIntersecting) {
                     const item = entry.target;
                     item.classList.add('visible'); // Animáció indítása
-                    const img = item.querySelector('img');
-                    if (img && img.dataset.src) {
-                        img.src = img.dataset.src; // Kép tényleges letöltése a data-src-ből
-                    }
+                    const kep = item.querySelector('img');
+                    const forras = item.querySelector('source');
+                    if (kep && kep.dataset.srcset) kep.srcset = kep.dataset.srcset;
+                    if (kep && kep.dataset.src) kep.src = kep.dataset.src;
+                    if (forras && forras.dataset.srcset) forras.srcset = forras.dataset.srcset;
                     obs.unobserve(item); // Ha egyszer betöltött és látható, nem figyeljük tovább
                 }
             });
-        }, { threshold: 0.1 });
+        }, { threshold: 0.1, rootMargin: '600px 0px' });
+
+        let sorszam = 0;
 
         data.forEach(file => {
-            // Csak a képfájlokat jelenítjük meg
-            if (file.name.endsWith('.jpg') || file.name.endsWith('.png') || file.name.endsWith('.webp') || file.name.endsWith('.jpeg')) {
-                
-                const filePath = folderName ? `${folderName}/${file.name}` : file.name;
-                
-                // Itt is supabaseClient-et használunk
-                const { data: publicUrlData } = supabaseClient.storage.from(bucketName).getPublicUrl(filePath);
-                const imageUrl = publicUrlData.publicUrl;
+            // Csak a képfájlokat jelenítjük meg, a generált thumb/medium változatokat és a manifestet kihagyjuk
+            if (!file.name.match(/\.(jpg|jpeg|png|webp)$/i) || /-(thumb|medium)\./i.test(file.name)) return;
 
-                // Kép adatainak elmentése a listába
-                const kepIndex = kepekLista.length;
-                kepekLista.push({ url: imageUrl, nev: file.name });
+            const filePath = folderName ? `${folderName}/${file.name}` : file.name;
+            const { data: publicUrlData } = supabaseClient.storage.from(bucketName).getPublicUrl(filePath);
+            const eredetiUrl = publicUrlData.publicUrl;
+            const info = manifest[file.name];
 
-                // HTML elem létrehozása
-                const item = document.createElement('div');
-                item.className = 'subphoto-item';
-                item.innerHTML = `<img data-src="${imageUrl}" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="Páros pillanat – ${file.name}" loading="lazy">`;
-                
-                // Kattintás esemény hozzáadása a Lightboxhoz
-                item.addEventListener('click', () => {
-                    mutatKepet(kepIndex);
-                    lightbox.classList.add('lightbox-active');
-                    document.body.style.overflow = 'hidden';
-                });
+            let urls = null;
+            if (info) {
+                const alapNev = nevKiterjesztesNelkul(file.name);
+                const alapUtvonal = folderName ? `${folderName}/${alapNev}` : alapNev;
+                urls = {
+                    thumbWebp: supabaseClient.storage.from(bucketName).getPublicUrl(`${alapUtvonal}-thumb.webp`).data.publicUrl,
+                    thumbJpg: supabaseClient.storage.from(bucketName).getPublicUrl(`${alapUtvonal}-thumb.jpg`).data.publicUrl,
+                    mediumWebp: supabaseClient.storage.from(bucketName).getPublicUrl(`${alapUtvonal}-medium.webp`).data.publicUrl,
+                    mediumJpg: supabaseClient.storage.from(bucketName).getPublicUrl(`${alapUtvonal}-medium.jpg`).data.publicUrl,
+                };
+            }
 
-                grid.appendChild(item);
-                
-                // Figyeljük meg az újonnan hozzáadott elemet
-                observer.observe(item);
+            // Kép adatainak elmentése a listába (a lightbox a közepes méretet mutatja, nem az eredetit)
+            const kepIndex = kepekLista.length;
+            kepekLista.push({
+                lightboxJpg: urls ? urls.mediumJpg : eredetiUrl,
+                lightboxWebp: urls ? urls.mediumWebp : null,
+                nev: file.name
+            });
+
+            // HTML elem létrehozása
+            const item = document.createElement('div');
+            item.className = 'subphoto-item';
+
+            const elsoNehany = sorszam < 3; // Az első pár kép azonnal (above the fold), a többi lusta betöltéssel
+            sorszam++;
+
+            const szelesseg = info ? info.w : 800;
+            const magassag = info ? info.h : 1000;
+            const blurStyle = info ? ` style="background-image:url('${info.blur}'); background-size:cover; background-repeat:no-repeat;"` : '';
+            const altSzoveg = `Páros pillanat – ${file.name}`;
+
+            if (urls) {
+                const webpSrcsetAttr = elsoNehany
+                    ? `srcset="${urls.thumbWebp} 480w, ${urls.mediumWebp} 1280w"`
+                    : `data-srcset="${urls.thumbWebp} 480w, ${urls.mediumWebp} 1280w"`;
+                const jpgAttrs = elsoNehany
+                    ? `src="${urls.thumbJpg}" srcset="${urls.thumbJpg} 480w, ${urls.mediumJpg} 1280w"`
+                    : `src="${URES_PIXEL}" data-src="${urls.thumbJpg}" data-srcset="${urls.thumbJpg} 480w, ${urls.mediumJpg} 1280w"`;
+
+                item.innerHTML = `<picture>
+                    <source type="image/webp" ${webpSrcsetAttr} sizes="${RACS_SIZES}">
+                    <img ${jpgAttrs} sizes="${RACS_SIZES}" width="${szelesseg}" height="${magassag}" alt="${altSzoveg}" loading="${elsoNehany ? 'eager' : 'lazy'}"${sorszam === 1 ? ' fetchpriority="high"' : ''}${blurStyle}>
+                </picture>`;
+            } else {
+                // Biztonsági háló: ha a script még nem futott le erre a képre, az eredeti fájlt mutatjuk
+                const srcAttr = elsoNehany ? `src="${eredetiUrl}"` : `src="${URES_PIXEL}" data-src="${eredetiUrl}"`;
+                item.innerHTML = `<img ${srcAttr} alt="${altSzoveg}" loading="${elsoNehany ? 'eager' : 'lazy'}">`;
+            }
+
+            // Kattintás esemény hozzáadása a Lightboxhoz
+            item.addEventListener('click', () => {
+                mutatKepet(kepIndex);
+                lightbox.classList.add('lightbox-active');
+                document.body.style.overflow = 'hidden';
+            });
+
+            grid.appendChild(item);
+            if (elsoNehany) {
+                item.classList.add('visible');
+            } else {
+                observer.observe(item); // Az új elem figyelése
             }
         });
     }
@@ -197,7 +286,8 @@
         }
 
         const aktKep = kepekLista[aktualisIndex];
-        lightboxImg.src = aktKep.url;
+        lightboxSource.srcset = aktKep.lightboxWebp || '';
+        lightboxImg.src = aktKep.lightboxJpg;
         lightboxCaption.innerText = "Páros pillanat";
     }
 

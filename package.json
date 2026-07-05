@@ -1,0 +1,15 @@
+{
+  "name": "blankas-photography",
+  "version": "1.0.0",
+  "description": "Blank's Photography portfolio site",
+  "private": true,
+  "scripts": {
+    "optimize-images": "node --env-file=.env scripts/optimize-images.js"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.109.0",
+    "sharp": "^0.35.3",
+    "ws": "^8.21.0"
+  }
+}
