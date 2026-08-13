@@ -1,0 +1,57 @@
+# Supabase free-tier keep-alive.
+#
+# Miert kell: a Supabase Free csomag 7 nap ALACSONY AKTIVITAS utan PAUSED
+# allapotba teszi a projektet. Ilyenkor a Storage is offline, es Blanka
+# oldalan egyetlen kep sem jelenik meg. 2026 augusztusaig ez ketszer megtortent.
+#
+# Mit csinal: naponta egyszer meghivja UGYANAZT a storage list vegpontot,
+# amit maga az oldal is hiv galeria-betolteskor. Ez valodi API-forgalom a
+# projekt fele, tehat nem "csak ugy" tartja ebren, hanem pontosan azt a
+# hasznalatot szimulalja, amit egy latogato is generalna.
+#
+# A kulcs a publikus anon key (ugyanaz, ami az oldal HTML-jeben is benne van),
+# repo-secretkent tarolva, hogy ne a fajlban alljon.
+#
+# FIGYELEM: a GitHub 60 nap repo-inaktivitas utan LETILTJA az utemezett
+# workflow-kat. Ha a repoban 2 honapig nincs commit, ez a kor is leall.
+# Ezert fut mellette egy fuggetlen havi ellenorzes is Marveen oldalan.
+
+name: Supabase keep-alive
+
+on:
+  schedule:
+    - cron: '17 6 * * *'   # minden nap 06:17 UTC
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Storage list hivas (ugyanaz, amit az oldal csinal)
+        env:
+          ANON: ${{ secrets.SUPABASE_ANON_KEY }}
+          URL: https://lyagqwuqzurkkvcnjqtg.supabase.co
+        run: |
+          set -euo pipefail
+          code=$(curl -s -o /tmp/out.json -w '%{http_code}' -X POST \
+            "$URL/storage/v1/object/list/Blanka%20pics" \
+            -H "apikey: $ANON" \
+            -H "Authorization: Bearer $ANON" \
+            -H 'Content-Type: application/json' \
+            -d '{"prefix":"","limit":1,"offset":0}')
+          echo "HTTP $code"
+          if [ "$code" != "200" ]; then
+            echo "A Supabase projekt NEM valaszol rendesen. Valoszinuleg paused, kezzel fel kell ebreszteni a dashboardon."
+            head -c 500 /tmp/out.json || true
+            exit 1
+          fi
+
+      - name: Egy valodi kep is toltodik-e
+        env:
+          URL: https://lyagqwuqzurkkvcnjqtg.supabase.co
+        run: |
+          set -euo pipefail
+          code=$(curl -s -o /dev/null -w '%{http_code}' \
+            "$URL/storage/v1/object/public/Blanka%20pics/Sara__Tamas_361-thumb.webp")
+          echo "kep HTTP $code"
+          [ "$code" = "200" ]
