@@ -803,3 +803,16 @@ nav {
         font-size: 1.5rem; /* Az eredeti 2rem-ről kisebbre véve */
     }
 }
+/* ---- Kep-logo (Blanka sajat arculata) ----
+   A logo eredeti szine nagyon vilagos (#F6D8CC), a krem hatteren 1,41:1 kontrasztot
+   adna, ami gyakorlatilag lathatatlan. Ezert a marka sajat akcent-szinere (#C49A81)
+   van szinezve, ami 2,41:1. Az eredeti szinu valtozat: img/logo-eredeti-szin.png */
+.logo img {
+    display: block;
+    width: 172px;
+    height: auto;
+}
+
+@media (max-width: 768px) {
+    .logo img { width: 132px; }
+}
