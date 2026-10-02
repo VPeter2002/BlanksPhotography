@@ -384,7 +384,17 @@
 
             let sorszam = 0;
 
-            data.forEach(file => {
+            // A fooldali valogatas 20 kepre van vagva, ezert a manifest-alapu
+        // listat is ugyanarra kell vagni.
+        // Ha van manifest, ABBOL hajtjuk a galeriat, nem a mappa listazasabol.
+        // Igy az eredeti (nagy) kepeket nem kell a tarhelyen tartani: az oldal
+        // ugyis csak a thumb/medium valtozatokat szolgalja ki.
+        const manifestNevek = Object.keys(manifest).sort();
+        const feldolgozandok = manifestNevek.length
+            ? manifestNevek.map(nev => ({ name: nev })).slice(0, 20)
+            : data;
+
+        feldolgozandok.forEach(file => {
                 const filePath = folderName ? `${folderName}/${file.name}` : file.name;
                 const { data: publicUrlData } = supabaseClient.storage.from(bucketName).getPublicUrl(filePath);
                 const eredetiUrl = publicUrlData.publicUrl;

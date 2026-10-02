@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fotózás | Blank's Photography</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="footer.css">
+    <!-- Google Fonts a prémium megjelenéshez -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+</head>
+<body class="gallery-subpage">
+
+    <nav id="main-nav">
+        <a href="index.html" class="logo mobile-logo">Blank's <span>Photography</span></a>
+        <div class="menu-toggle" id="mobile-menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+        <div class="nav-list">
+            <ul class="nav-left">
+                <li><a href="index.html">Kezdőlap</a></li>
+                <li><a href="gallery.html" class="active">Galéria</a></li>
+            </ul>
+            <a href="index.html" class="logo desktop-logo">Blank's <span>Photography</span></a>
+            <ul class="nav-right">
+                <li><a href="index.html#about">Rólam</a></li>
+                <li><a href="index.html#contact">Kapcsolat</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="section subgallery-main">
+        <div class="back-nav">
+            <a href="gallery.html" id="vissza-link">← Vissza</a>
+        </div>
+
+        <h1 class="section-title" id="forgatas-cim">Fotózás</h1>
+        <div class="stories-grid">
+            <div class="story-bucket">
+                <h3 class="story-title" id="forgatas-alcim"></h3>
+                
+                <div class="subphoto-grid" id="photo-container"></div>
+            </div>
+        </div>
+    </main>
+
+    <div id="lightbox" class="lightbox-modal">
+        <span class="lightbox-close">&times;</span>
+        <span class="lightbox-prev">&#10094;</span>
+        <picture>
+            <source id="lightbox-source" type="image/webp" srcset="">
+            <img class="lightbox-content" id="lightbox-img" src="" alt="Nagyított kép">
+        </picture>
+        <span class="lightbox-next">&#10095;</span>
+        <div class="lightbox-caption" id="lightbox-caption"></div>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-top-border"></div>
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3 class="footer-heading">NAVIGÁCIÓ</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Főoldal</a></li>
+                    <li><a href="index.html#contact">Kapcsolat</a></li>
+                    <li><a href="adatvedelem.html">Adatvédelmi Tájékoztató</a></li>
+                    <li><a href="impresszum.html">Impresszum</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3 class="footer-heading">ELÉRHETŐSÉG</h3>
+                <div class="contact-info-list">
+                    <div class="contact-item">
+                        <div class="icon-circle">📞</div>
+                        <div class="contact-text">
+                            <span class="label">TELEFON</span>
+                            <span class="value">+36 70 123 45 67</span>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="icon-circle">✉️</div>
+                        <div class="contact-text">
+                            <span class="label">EMAIL</span>
+                            <span class="value">hello@blankaphotography.hu</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="forgatasok.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script>
+    // --- SUPABASE KAPCSOLÓDÁS ---
+    const supabaseUrl = 'https://lyagqwuqzurkkvcnjqtg.supabase.co';
+    // IDE MÁSOLD BE AZ API MENÜPONTBÓL A HOSSZÚ KÓDOT:
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx5YWdxd3VxenVya2t2Y25qcXRnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5MDE2NzIsImV4cCI6MjA5NTQ3NzY3Mn0.tuoGksKYjjiaohdTaNt_vvnY1mB9IUpoQC3cAqA9-tU'; 
+    
+    const bucketName = 'Blanka pics'; // A frissített vödör neved
+    // A mappat a cimsorbol vesszuk, de KIZAROLAG akkor fogadjuk el, ha szerepel a
+        // forgatasok.js katalogusaban. Igy nem lehet tetszoleges erteket beinjektalni.
+        const urlParam = new URLSearchParams(location.search).get('mappa') || '';
+        const forgatas = (window.FORGATAS_MAPPAK || {})[urlParam] || null;
+        const folderName = forgatas ? forgatas.mappa : '';
+
+        if (forgatas) {
+            document.getElementById('forgatas-cim').textContent = forgatas.cim;
+            document.getElementById('forgatas-alcim').textContent = forgatas.cim + ' fotói';
+            document.title = forgatas.cim + " | Blank's Photography";
+            const vissza = document.getElementById('vissza-link');
+            vissza.href = forgatas.vissza;
+            vissza.textContent = '← Vissza a fotózásokhoz';
+        } else {
+            document.getElementById('forgatas-cim').textContent = 'Nem találjuk ezt a fotózást';
+            document.getElementById('forgatas-alcim').textContent = '';
+        }
+    // A JAVÍTÁS: supabaseClient névre kereszteltük a változót
+    const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+    // Lightbox elemek kijelölése
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxSource = document.getElementById('lightbox-source');
+    const lightboxCaption = document.getElementById('lightbox-caption');
+    const closeBtn = document.querySelector('.lightbox-close');
+    const prevBtn = document.querySelector('.lightbox-prev');
+    const nextBtn = document.querySelector('.lightbox-next');
+
+    // Képek adatait tároló tömb és aktuális index
+    let kepekLista = [];
+    let aktualisIndex = 0;
+
+    const RACS_SIZES = "(max-width: 600px) 45vw, (max-width: 1000px) 30vw, 450px";
+    const URES_PIXEL = "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=";
+
+    function nevKiterjesztesNelkul(nev) {
+        return nev.replace(/\.[^.]+$/, '');
+    }
+
+    // Egy kép 5 fájlt jelent a mappában (eredeti + thumb/medium x2), ezért
+    // egyetlen list()-hívás limitje kevés lehet — lapozva kérjük le mindet.
+    async function listaOsszesFajl(mappa) {
+        let osszes = [];
+        let offset = 0;
+        while (true) {
+            const { data, error } = await supabaseClient.storage.from(bucketName).list(mappa, {
+                limit: 1000,
+                offset,
+                sortBy: { column: 'name', order: 'asc' }
+            });
+            if (error) return { data: null, error };
+            if (!data || data.length === 0) break;
+            osszes = osszes.concat(data);
+            if (data.length < 1000) break;
+            offset += 1000;
+        }
+        return { data: osszes, error: null };
+    }
+
+    // A scripts/optimize-images.js build-script által legenerált manifest.json
+    // tartalmazza a képek valós méretét (layout shift ellen) és egy elmosott
+    // előnézetét (blur-up placeholder) — kép letöltése nélkül.
+    async function betoltManifest() {
+        const { data } = supabaseClient.storage.from(bucketName).getPublicUrl(`${folderName}/manifest.json`);
+        try {
+            const res = await fetch(data.publicUrl);
+            if (!res.ok) return {};
+            return await res.json();
+        } catch {
+            return {};
+        }
+    }
+
+    // Képek automatikus lekérése és megjelenítése
+    async function betoltKepek() {
+        const grid = document.getElementById('photo-container');
+        console.log("Megpróbálom lekérni a képeket a Supabase-ből...");
+
+        const [{ data, error }, manifest] = await Promise.all([
+            listaOsszesFajl(folderName),
+            betoltManifest()
+        ]);
+
+        if (error) {
+            console.error('Hiba a Supabase lekérés során:', error);
+            grid.innerHTML = '<p style="text-align:center; color:#888;">Sajnos nem sikerült betölteni a képeket.</p>';
+            return;
+        }
+
+        console.log("Talált képek száma:", data.length);
+        kepekLista = []; // Lista ürítése újratöltés esetén
+
+        // Intersection Observer a lusta betöltéshez és az animációhoz
+        const observer = new IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const item = entry.target;
+                    item.classList.add('visible'); // Animáció indítása
+                    const kep = item.querySelector('img');
+                    const forras = item.querySelector('source');
+                    if (kep && kep.dataset.srcset) kep.srcset = kep.dataset.srcset;
+                    if (kep && kep.dataset.src) kep.src = kep.dataset.src;
+                    if (forras && forras.dataset.srcset) forras.srcset = forras.dataset.srcset;
+                    obs.unobserve(item); // Ha egyszer betöltött és látható, nem figyeljük tovább
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '600px 0px' });
+
+        let sorszam = 0;
+
+        // Ha van manifest, ABBOL hajtjuk a galeriat, nem a mappa listazasabol.
+        // Igy az eredeti (nagy) kepeket nem kell a tarhelyen tartani: az oldal
+        // ugyis csak a thumb/medium valtozatokat szolgalja ki.
+        const manifestNevek = Object.keys(manifest).sort();
+        const feldolgozandok = manifestNevek.length
+            ? manifestNevek.map(nev => ({ name: nev }))
+            : data;
+
+        feldolgozandok.forEach(file => {
+            // Csak a képfájlokat jelenítjük meg, a generált thumb/medium változatokat és a manifestet kihagyjuk
+            if (!file.name.match(/\.(jpg|jpeg|png|webp)$/i) || /-(thumb|medium)\./i.test(file.name)) return;
+
+            const filePath = folderName ? `${folderName}/${file.name}` : file.name;
+            const { data: publicUrlData } = supabaseClient.storage.from(bucketName).getPublicUrl(filePath);
+            const eredetiUrl = publicUrlData.publicUrl;
+            const info = manifest[file.name];
+
+            let urls = null;
+            if (info) {
+                const alapNev = nevKiterjesztesNelkul(file.name);
+                const alapUtvonal = folderName ? `${folderName}/${alapNev}` : alapNev;
+                urls = {
+                    thumbWebp: supabaseClient.storage.from(bucketName).getPublicUrl(`${alapUtvonal}-thumb.webp`).data.publicUrl,
+                    thumbJpg: supabaseClient.storage.from(bucketName).getPublicUrl(`${alapUtvonal}-thumb.jpg`).data.publicUrl,
+                    mediumWebp: supabaseClient.storage.from(bucketName).getPublicUrl(`${alapUtvonal}-medium.webp`).data.publicUrl,
+                    mediumJpg: supabaseClient.storage.from(bucketName).getPublicUrl(`${alapUtvonal}-medium.jpg`).data.publicUrl,
+                };
+            }
+
+            // Kép adatainak elmentése a listába (a lightbox a közepes méretet mutatja, nem az eredetit)
+            const kepIndex = kepekLista.length;
+            kepekLista.push({
+                lightboxJpg: urls ? urls.mediumJpg : eredetiUrl,
+                lightboxWebp: urls ? urls.mediumWebp : null,
+                nev: file.name
+            });
+
+            // HTML elem létrehozása
+            const item = document.createElement('div');
+            item.className = 'subphoto-item';
+
+            const elsoNehany = sorszam < 3; // Az első pár kép azonnal (above the fold), a többi lusta betöltéssel
+            sorszam++;
+
+            const szelesseg = info ? info.w : 800;
+            const magassag = info ? info.h : 1000;
+            const blurStyle = info ? ` style="background-image:url('${info.blur}'); background-size:cover; background-repeat:no-repeat;"` : '';
+            const altSzoveg = `Esküvői pillanat – ${file.name}`;
+
+            if (urls) {
+                const webpSrcsetAttr = elsoNehany
+                    ? `srcset="${urls.thumbWebp} 480w, ${urls.mediumWebp} 1280w"`
+                    : `data-srcset="${urls.thumbWebp} 480w, ${urls.mediumWebp} 1280w"`;
+                const jpgAttrs = elsoNehany
+                    ? `src="${urls.thumbJpg}" srcset="${urls.thumbJpg} 480w, ${urls.mediumJpg} 1280w"`
+                    : `src="${URES_PIXEL}" data-src="${urls.thumbJpg}" data-srcset="${urls.thumbJpg} 480w, ${urls.mediumJpg} 1280w"`;
+
+                item.innerHTML = `<picture>
+                    <source type="image/webp" ${webpSrcsetAttr} sizes="${RACS_SIZES}">
+                    <img ${jpgAttrs} sizes="${RACS_SIZES}" width="${szelesseg}" height="${magassag}" alt="${altSzoveg}" loading="${elsoNehany ? 'eager' : 'lazy'}"${sorszam === 1 ? ' fetchpriority="high"' : ''}${blurStyle}>
+                </picture>`;
+            } else {
+                // Biztonsági háló: ha a script még nem futott le erre a képre, az eredeti fájlt mutatjuk
+                const srcAttr = elsoNehany ? `src="${eredetiUrl}"` : `src="${URES_PIXEL}" data-src="${eredetiUrl}"`;
+                item.innerHTML = `<img ${srcAttr} alt="${altSzoveg}" loading="${elsoNehany ? 'eager' : 'lazy'}">`;
+            }
+
+            // Kattintás esemény hozzáadása a Lightboxhoz
+            item.addEventListener('click', () => {
+                mutatKepet(kepIndex);
+                lightbox.classList.add('lightbox-active');
+                document.body.style.overflow = 'hidden';
+            });
+
+            grid.appendChild(item);
+            if (elsoNehany) {
+                item.classList.add('visible');
+            } else {
+                observer.observe(item); // Az új elem figyelése
+            }
+        });
+    }
+
+    // Kép megjelenítése a sorszám alapján
+    function mutatKepet(index) {
+        if (kepekLista.length === 0) return;
+
+        // Végtelenített lapozás logikája
+        if (index < 0) {
+            aktualisIndex = kepekLista.length - 1;
+        } else if (index >= kepekLista.length) {
+            aktualisIndex = 0;
+        } else {
+            aktualisIndex = index;
+        }
+
+        const aktKep = kepekLista[aktualisIndex];
+        lightboxSource.srcset = aktKep.lightboxWebp || '';
+        lightboxImg.src = aktKep.lightboxJpg;
+        lightboxCaption.innerText = "Esküvői pillanat";
+    }
+
+    // Navigációs gombok eseménykezelői
+    prevBtn.addEventListener('click', (e) => {
+        e.stopPropagation(); // Ne záródjon be a lightbox, ha rákattintunk a nyílra
+        mutatKepet(aktualisIndex - 1);
+    });
+
+    nextBtn.addEventListener('click', (e) => {
+        e.stopPropagation(); // Ne záródjon be a lightbox, ha rákattintunk a nyílra
+        mutatKepet(aktualisIndex + 1);
+    });
+
+    // Lightbox bezárás események
+    closeBtn.addEventListener('click', () => {
+        lightbox.classList.remove('lightbox-active');
+        document.body.style.overflow = 'auto';
+    });
+
+    lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) {
+            lightbox.classList.remove('lightbox-active');
+            document.body.style.overflow = 'auto';
+        }
+    });
+
+    // Oldal indulásakor futtatás
+    document.addEventListener('DOMContentLoaded', betoltKepek);
+</script>
+    
+    <script src="script.js"></script>
+</body>
+</html>

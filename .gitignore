@@ -1,3 +1,7 @@
 node_modules/
 .env
 .optimize-cache.json
+
+# Blanka altal kuldott nyers fotok (sok szaz MB, a Supabase-be mennek, nem a repoba)
+*-photo-download-*/
+*-photo-download-*.zip
