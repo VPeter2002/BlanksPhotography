@@ -3,7 +3,9 @@
     --bg-cream: #FBF9F6;
     --bg-beige: #E5D7C8;
     --text-dark: #5A534A;
-    --accent-rose: #C49A81;
+    --accent-rose: #C49A81;        /* diszito: keret, vonal, ikon */
+    --accent-text: #96644A;        /* SZOVEGHEZ: 4,74:1 a krem hatteren, AA megfelel.
+                                      a --accent-rose csak 2,41:1 lenne, ami bukik */
     --font-serif: 'Playfair Display', serif;
     --font-sans: 'Inter', sans-serif;
 }
@@ -50,7 +52,7 @@ nav {
     z-index: 1002;
 }
 
-.logo span { font-style: italic; color: var(--accent-rose); }
+.logo span { font-style: italic; color: var(--accent-text); }
 
 /* Asztali menü lista */
 .nav-list {
@@ -77,7 +79,7 @@ nav {
 }
 
 .nav-left li a:hover, .nav-left li a.active,
-.nav-right li a:hover, .nav-right li a.active { color: var(--accent-rose); }
+.nav-right li a:hover, .nav-right li a.active { color: var(--accent-text); }
 
 /* Mobil Menu Toggle Gomb */
 .menu-toggle {
@@ -205,7 +207,7 @@ nav {
 }
 
 .slider-arrow:hover {
-    color: var(--accent-rose);
+    color: var(--accent-text);
     background-color: rgba(251, 249, 246, 0.1);
 }
 
@@ -316,7 +318,7 @@ nav {
 }
 
 .service-card h3 { 
-    color: var(--accent-rose); 
+    color: var(--accent-text); 
     font-family: var(--font-serif);
     font-size:200%; 
     margin-bottom: 15px; 
@@ -341,7 +343,7 @@ nav {
     margin: 0 auto;
 }
 
-.about-content h3 { font-family: var(--font-serif); color: var(--accent-rose); margin-bottom: 20px; }
+.about-content h3 { font-family: var(--font-serif); color: var(--accent-text); margin-bottom: 20px; }
 .about-content p { color: var(--text-dark); margin-bottom: 15px; }
 
 
@@ -544,7 +546,7 @@ nav {
 .category-info h3 {
     font-family: var(--font-serif);
     font-size: 2rem;
-    color: var(--accent-rose);
+    color: var(--accent-text);
     margin-bottom: 5px;
     font-style: italic;
 }
@@ -558,7 +560,7 @@ nav {
 
 .lightbox-close:hover,
 .lightbox-close:focus {
-    color: var(--accent-rose);
+    color: var(--accent-text);
     text-decoration: none;
     cursor: pointer;
 }
@@ -586,7 +588,7 @@ nav {
 }
 
 .back-nav a:hover {
-    color: var(--accent-rose);
+    color: var(--accent-text);
 }
 
 .stories-grid {
@@ -700,7 +702,7 @@ nav {
 }
 
 .lightbox-close:hover {
-    color: var(--accent-rose);
+    color: var(--accent-text);
 }
 
 .lightbox-caption {
@@ -734,7 +736,7 @@ nav {
 .lightbox-next { right: 30px; }
 
 .lightbox-prev:hover, .lightbox-next:hover {
-    color: var(--accent-rose);
+    color: var(--accent-text);
     background: rgba(229, 215, 200, 0.6);
 }
 

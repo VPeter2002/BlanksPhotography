@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# A sitemap sora a sajat domain bealitasa utan kerul ide, mert abszolut cim kell:
+# Sitemap: https://<sajat-domain>/sitemap.xml

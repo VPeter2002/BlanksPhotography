@@ -3,7 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blank's Photography | Portfólió</title>
+    <title>Blank's Photography | Esküvő, jegyes és kismama fotózás</title>
+    <meta name="description" content="Esküvői, jegyes, kismama és páros fotózás természetes fényben, pózolás nélkül. Nézd meg Blanka munkáit, és keressük meg együtt a te történetedet.">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Blank's Photography">
+    <meta property="og:locale" content="hu_HU">
+    <meta property="og:title" content="Blank's Photography | Esküvő, jegyes és kismama fotózás">
+    <meta property="og:description" content="Esküvői, jegyes, kismama és páros fotózás természetes fényben, pózolás nélkül. Nézd meg Blanka munkáit, és keressük meg együtt a te történetedet.">
+    <meta property="og:image" content="https://lyagqwuqzurkkvcnjqtg.supabase.co/storage/v1/object/public/Blanka%20pics/og-cover.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
     <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32.png">
     <link rel="apple-touch-icon" sizes="180x180" href="img/favicon-180.png">
     <meta name="theme-color" content="#FBF9F6">
@@ -136,7 +146,7 @@
     <div class="service-card">
         <h3>Esküvő</h3>
         <a href="wedding-gallery.html" class="photo-item">
-            <img src="https://lyagqwuqzurkkvcnjqtg.supabase.co/storage/v1/object/public/Blanka%20pics/Sara__Tamas_361.jpg" alt="Esküvői pillanat">
+            <img decoding="async" loading="lazy" src="https://lyagqwuqzurkkvcnjqtg.supabase.co/storage/v1/object/public/Blanka%20pics/Sara__Tamas_361.jpg" alt="Esküvői pillanat">
         </a>
         <p>A nagy nap megismételhetetlen pillanatai, az érzelmektől a buliig.</p>
     </div>
@@ -144,7 +154,7 @@
     <div class="service-card">
         <h3>Páros</h3>
         <a href="couple-gallery.html" class="photo-item">
-            <img src="https://lyagqwuqzurkkvcnjqtg.supabase.co/storage/v1/object/public/Blanka%20pics/saba_tomo_fani1_kisebb.jpg" alt="Páros fotózás">
+            <img decoding="async" loading="lazy" src="https://lyagqwuqzurkkvcnjqtg.supabase.co/storage/v1/object/public/Blanka%20pics/saba_tomo_fani1_kisebb.jpg" alt="Páros fotózás">
         </a>
         <p>A kettőtök közötti összhang megörökítése természetes környezetben, feszengés nélkül.</p>
     </div>
@@ -152,7 +162,7 @@
     <div class="service-card">
         <h3>Kismama</h3>
         <a href="maternity-gallery.html" class="photo-item">
-            <img src="https://lyagqwuqzurkkvcnjqtg.supabase.co/storage/v1/object/public/Blanka%20pics/Sara_66.jpg" alt="Kismama fotózás">
+            <img decoding="async" loading="lazy" src="https://lyagqwuqzurkkvcnjqtg.supabase.co/storage/v1/object/public/Blanka%20pics/Sara_66.jpg" alt="Kismama fotózás">
         </a>
         <p>A várakozás csodája, finom fényekkel és intim hangulatban.</p>
     </div>
@@ -160,7 +170,7 @@
     <div class="service-card">
         <h3>Jegyes</h3>
         <a href="engagement-gallery.html" class="photo-item">
-            <img src="https://lyagqwuqzurkkvcnjqtg.supabase.co/storage/v1/object/public/Blanka%20pics/jegyes_11_kissebb.jpg" alt="Jegyes fotózás">
+            <img decoding="async" loading="lazy" src="https://lyagqwuqzurkkvcnjqtg.supabase.co/storage/v1/object/public/Blanka%20pics/jegyes_11_kissebb.jpg" alt="Jegyes fotózás">
         </a>
         <p>A kettőtök közötti összhang megörökítése természetes környezetben, feszengés nélkül.</p>
     </div>
@@ -195,7 +205,7 @@
         <!-- Kép a fotósról -->
         <div class="about-image-box">
             <div  class="photo-item">    
-                <img src="https://lyagqwuqzurkkvcnjqtg.supabase.co/storage/v1/object/public/Blanka%20pics/blanka2.jpg" alt="Blanka portré">
+                <img decoding="async" loading="lazy" src="https://lyagqwuqzurkkvcnjqtg.supabase.co/storage/v1/object/public/Blanka%20pics/blanka2.jpg" alt="Blanka portré">
             </div>
         </div>
     </div>
@@ -207,7 +217,11 @@
     <form class="contact-form" id="contactForm">
         <input type="text" name="nev" placeholder="Az Ön neve" required>
         <input type="email" name="email" placeholder="E-mail címe" required>
+        <input type="tel" name="telefon" placeholder="Telefonszám (nem kötelező)" autocomplete="tel">
         <textarea name="uzenet" placeholder="Üzenet (dátum, helyszín...)" rows="5" required></textarea>
+        <!-- Honeypot: valodi latogatonak lathatatlan, bot kitolti. Ne tavolitsd el. -->
+        <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"
+               style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
         <button type="submit" class="submit-btn" id="submit-btn">Üzenet küldése</button>
         
         <div id="form-status" class="form-status-message"></div>
@@ -275,7 +289,9 @@
             const formData = {
                 nev: this.nev.value,
                 email: this.email.value,
-                uzenet: this.uzenet.value
+                telefon: this.telefon ? this.telefon.value : '',
+                uzenet: this.uzenet.value,
+                website: this.website ? this.website.value : ''
             };
 
             try {
@@ -293,7 +309,8 @@
                         submitBtn.disabled = false;
                     }, 3000);
                 } else {
-                    throw new Error('Hiba történt a küldés során.');
+                    const valasz = await response.json().catch(() => ({}));
+                    throw new Error(valasz.error || 'Hiba történt a küldés során.');
                 }
             } catch (error) {
                 console.error(error);
@@ -435,11 +452,11 @@
 
                     item.innerHTML = `<picture>
                         <source type="image/webp" ${webpSrcsetAttr} sizes="${HIGHLIGHT_SIZES}">
-                        <img ${jpgAttrs} sizes="${HIGHLIGHT_SIZES}" width="${szelesseg}" height="${magassag}" alt="Kiemelt pillanat" loading="${elsoNehany ? 'eager' : 'lazy'}"${blurStyle}>
+                        <img decoding="async" ${jpgAttrs} sizes="${HIGHLIGHT_SIZES}" width="${szelesseg}" height="${magassag}" alt="Kiemelt pillanat" loading="${elsoNehany ? 'eager' : 'lazy'}"${blurStyle}>
                     </picture>`;
                 } else {
                     const srcAttr = elsoNehany ? `src="${eredetiUrl}"` : `src="${URES_PIXEL}" data-src="${eredetiUrl}"`;
-                    item.innerHTML = `<img ${srcAttr} alt="Kiemelt pillanat" loading="${elsoNehany ? 'eager' : 'lazy'}">`;
+                    item.innerHTML = `<img decoding="async" ${srcAttr} alt="Kiemelt pillanat" loading="${elsoNehany ? 'eager' : 'lazy'}">`;
                 }
 
                 container.appendChild(item);
