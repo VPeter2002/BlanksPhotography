@@ -133,6 +133,14 @@
             document.getElementById('forgatas-cim').textContent = 'Nem találjuk ezt a fotózást';
             document.getElementById('forgatas-alcim').textContent = '';
         }
+
+    // A kepek felirata a katalogusbol jon. Korabban minden galeriaban fixen
+    // "Eskuvoi pillanat" allt, tehat a kismama- es paros-forgatasoknal minden
+    // kep alt-szovege es lightbox-felirata rossz fotozast mondott.
+    const KATEGORIA_SZO = { eskuvo: 'esküvői', jegyes: 'jegyes', kismama: 'kismama', paros: 'páros' };
+    const kepFelirat = forgatas
+        ? forgatas.cim + (KATEGORIA_SZO[forgatas.kategoria] ? ', ' + KATEGORIA_SZO[forgatas.kategoria] + ' fotózás' : '')
+        : 'Fotó';
     // A JAVÍTÁS: supabaseClient névre kereszteltük a változót
     const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
@@ -274,7 +282,7 @@
             const szelesseg = info ? info.w : 800;
             const magassag = info ? info.h : 1000;
             const blurStyle = info ? ` style="background-image:url('${info.blur}'); background-size:cover; background-repeat:no-repeat;"` : '';
-            const altSzoveg = `Esküvői pillanat – ${file.name}`;
+            const altSzoveg = `${kepFelirat} – ${sorszam}. kép`;
 
             if (urls) {
                 const webpSrcsetAttr = elsoNehany
@@ -326,7 +334,7 @@
         const aktKep = kepekLista[aktualisIndex];
         lightboxSource.srcset = aktKep.lightboxWebp || '';
         lightboxImg.src = aktKep.lightboxJpg;
-        lightboxCaption.innerText = "Esküvői pillanat";
+        lightboxCaption.innerText = kepFelirat;
     }
 
     // Navigációs gombok eseménykezelői
