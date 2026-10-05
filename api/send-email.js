@@ -5,7 +5,11 @@
 //   LEAD_TO_EMAIL  -- ide erkeznek a megkeresesek
 //   MAIL_FROM      -- feladó; sajat, hitelesitett domain kell ide, kulonben a
 //                     level nagyobb esellyel landol a spam mappaban
-const ALAP_CIMZETT = 'peter.veszpremi2002@gmail.com';
+// 2026-10-05: Peti megadta Blanka eles cimet, a leadek MOSTANTOL HOZZA mennek.
+// FIGYELEM: a LEAD_TO_EMAIL kornyezeti valtozo ERE IS ELSOBBSEGET ELVEZ. Ha az
+// Vercelen be van allitva a regi (Peti) cimre, akkor a lenti sor NEM hat, es az
+// urlap tovabbra is csendben mashova kuld. Ilyenkor a Vercel beallitast kell atirni.
+const ALAP_CIMZETT = 'tassblanka.photography@gmail.com';
 const ALAP_FELADO = "Blank's Photography <onboarding@resend.dev>";
 
 const MEZO_HOSSZ = { nev: 100, email: 150, telefon: 40, uzenet: 4000 };

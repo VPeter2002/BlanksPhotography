@@ -95,6 +95,19 @@
     color: var(--text-dark, #5A534A);
 }
 
+/* A telefon es az email kattinthato: mobilon egy koppintas es indul a hivas.
+   A link orokolje a lablec szoveg-szinet, ne a bongeszo kek alapertelmezeset. */
+.contact-text .value a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color .2s ease;
+}
+.contact-text .value a:hover,
+.contact-text .value a:focus-visible {
+    border-bottom-color: currentColor;
+}
+
 /* Alsó sáv */
 .footer-bottom {
     text-align: center;
