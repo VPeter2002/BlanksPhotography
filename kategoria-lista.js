@@ -4,8 +4,10 @@
 (function () {
   const BUCKET_URL = 'https://lyagqwuqzurkkvcnjqtg.supabase.co/storage/v1/object/public/Blanka%20pics';
 
+  // A kartyak egy hasabban, teljes szelessegben allnak, ezert a -thumb (480px)
+  // kevés lenne hozzá: a -medium (1280px) valtozatot toltjuk.
   function boritoUrl(mappa, borito, kiterjesztes) {
-    return `${BUCKET_URL}/${encodeURIComponent(mappa)}/${encodeURIComponent(borito)}-thumb.${kiterjesztes}`;
+    return `${BUCKET_URL}/${encodeURIComponent(mappa)}/${encodeURIComponent(borito)}-medium.${kiterjesztes}`;
   }
 
   function rendereld(kategoriaKulcs) {
@@ -18,7 +20,7 @@
     document.title = kat.cim + " | Blank's Photography";
 
     if (!kat.lista.length) {
-      cel.innerHTML = '<p style="text-align:center;color:#888;">Hamarosan.</p>';
+      cel.innerHTML = '<p style="text-align:center;padding:40px 0 120px;">Ez a galéria épp készül, hamarosan itt lesznek az első sorozatok.</p>';
       return;
     }
 
@@ -42,12 +44,10 @@
       const info = document.createElement('div');
       info.className = 'category-info';
       const h3 = document.createElement('h3');
-      h3.style.color = 'rgb(49, 49, 49)';
       h3.textContent = f.cim;                 // textContent: nem HTML, nem injektalhato
-      const p = document.createElement('p');
-      p.textContent = f.db ? f.db + ' kép' : '';
       info.appendChild(h3);
-      info.appendChild(p);
+      // Darabszam tudatosan nincs: Blanka kerese, hogy ne legyen kiirva,
+      // hany kep van egy sorozatban.
 
       kartya.appendChild(kep);
       kartya.appendChild(info);

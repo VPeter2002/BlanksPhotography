@@ -108,8 +108,8 @@ nav {
     margin: 120px auto 10px; /* Térköz csökkentése: alul 20px */
 
     /* ÚJ: Lekerekítés és árnyék a prémium megjelenésért */
-    overflow: hidden; /* Fontos, hogy a képek ne lógjanak ki a lekerekített sarkokból */
-    border-radius: 24px;
+    overflow: hidden; /* Fontos, hogy a képek ne lógjanak ki a sarkokon */
+    border-radius: 0;
     box-shadow: 0 25px 50px rgba(90, 83, 74, 0.15);
 
     background-color: var(--text-dark); /* Fallback, ha a képek nem töltődnek be */
@@ -249,7 +249,7 @@ nav {
 .photo-item {
     background: var(--bg-beige);
     border: 1px solid var(--bg-beige);
-    border-radius: 12px;
+    border-radius: 0;
     overflow: hidden;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -484,12 +484,23 @@ nav {
     cursor: pointer;
 }
 
+/* A galeria-oldalakon a cim is a navbar betutipusat es keptzeset kapja:
+   nem dolt Playfair, nagybetus. Blanka kerese 2026-10-14. */
+.gallery-page .section-title,
+.gallery-subpage .section-title {
+    font-style: normal;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
 /* --- 10. KATEGÓRIA KÁRTYÁK (GALÉRIA FŐOLDAL) --- */
+/* Egy hasab: a kategoriak es a sorozatok is egymas alatt allnak.
+   Blanka kerese 2026-10-14 -- a korabbi 4 oszlopos racs helyett. */
 .category-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 40px;
-    max-width: 1200px;
+    grid-template-columns: 1fr;
+    gap: 28px;
+    max-width: 920px;
     margin: 0 auto;
 }
 
@@ -498,10 +509,10 @@ nav {
     text-decoration: none;
     background: var(--bg-beige);
     border: 1px solid var(--bg-beige);
-    border-radius: 12px;
+    border-radius: 0;
     overflow: hidden;
     transition: transform 0.4s ease, border-color 0.4s ease;
-    height: 450px;
+    height: clamp(260px, 38vw, 420px);
     position: relative;
 }
 
@@ -517,19 +528,41 @@ nav {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgba(251, 249, 246, 0.8) 0%, rgba(251, 249, 246, 0) 70%);
+    /* Egy hasabban a kartya szelesebb, a felirat vilagos kepreszletre is eshet:
+       ezert erosebb a also fatyol, hogy a sotet szoveg mindenhol olvashato legyen. */
+    background: linear-gradient(to top, rgba(251, 249, 246, 0.95) 0%, rgba(251, 249, 246, 0.7) 22%, rgba(251, 249, 246, 0) 60%);
     z-index: 1;
     transition: background 0.4s ease;
 }
 
 .category-card:hover {
     border-color: var(--accent-rose);
-    transform: translateY(-10px);
+    transform: translateY(-4px);
 }
 
 .category-card:hover .category-image {
     transform: scale(1.05);
 }
+
+/* Kep nelkuli, meg feltoltesre varo kategoria (pl. Csalad).
+   Kisebb, csendes kartya: nem igyekszik ugy kinezni, mintha lenne benne galeria. */
+.category-card--soon {
+    height: 170px;
+    background: var(--bg-beige);
+}
+
+.category-card--soon .category-image { background: none; }
+
+.category-card--soon::before { background: none; }
+
+.category-card--soon .category-info {
+    top: 50%;
+    bottom: auto;
+    transform: translateY(-50%);
+    padding: 0 20px;
+}
+
+.category-card--soon .category-info p { color: var(--accent-text); }
 
 .category-info {
     position: absolute;
@@ -543,15 +576,21 @@ nav {
     z-index: 2;
 }
 
+/* Ugyanaz a betutipus es keptzes, mint a navbarban: Playfair Display,
+   nem dolt, nagybetus, 1px betukoz. Blanka kerese 2026-10-14. */
 .category-info h3 {
     font-family: var(--font-serif);
-    font-size: 2rem;
-    color: var(--accent-text);
-    margin-bottom: 5px;
-    font-style: italic;
+    font-size: clamp(1.4rem, 2.6vw, 2rem);
+    color: var(--text-dark);
+    margin-bottom: 0;
+    font-style: normal;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .category-info p {
+    font-family: var(--font-serif);
     font-size: 0.95rem;
     color: var(--text-dark);
     text-transform: uppercase;
@@ -603,6 +642,8 @@ nav {
     font-family: var(--font-serif);
     font-size: 1.8rem;
     font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     margin-bottom: 25px;
     border-bottom: 1px solid var(--bg-beige);
     padding-bottom: 10px;
@@ -623,7 +664,7 @@ nav {
 
 .subphoto-item {
     background: var(--bg-beige);
-    border-radius: 8px;
+    border-radius: 0;
     border: 1px solid var(--bg-beige);
     overflow: hidden;
     cursor: pointer;
@@ -643,7 +684,7 @@ nav {
 .subphoto-item img {
     width: 100%;
     height: auto;
-    border-radius: 4px;
+    border-radius: 0;
     display: block;
     transition: transform 0.5s ease;
 }
@@ -681,7 +722,7 @@ nav {
     max-width: 90%;
     max-height: 80vh;
     object-fit: contain;
-    border-radius: 4px;
+    border-radius: 0;
     transform: scale(0.95);
     transition: transform 0.4s ease;
 }
@@ -751,12 +792,12 @@ nav {
 /* --- MASONRY GRID MOBIL NÉZET --- */
 @media (max-width: 992px) {
     .photo-grid, .subphoto-grid { column-count: 2; }
-    .services-grid, .category-grid { grid-template-columns: repeat(2, 1fr); }
+    .services-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 576px) {
     .photo-grid, .subphoto-grid { column-count: 1; }
-    .services-grid, .category-grid { grid-template-columns: 1fr; }
+    .services-grid { grid-template-columns: 1fr; }
 }
 
 /* --- 11. HIGHLIGHTS (KIEMELT PILLANATOK) MONTÁZS --- */
@@ -774,7 +815,7 @@ nav {
     opacity: 0;
     transform: translateY(30px);
     transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-    border-radius: 6px;
+    border-radius: 0;
     overflow: hidden;
     box-shadow: 0 10px 30px rgba(90, 83, 74, 0.08);
 }
@@ -788,7 +829,7 @@ nav {
     width: 100%;
     height: auto;
     display: block;
-    border-radius: 6px;
+    border-radius: 0;
     transition: transform 0.4s ease;
 }
 

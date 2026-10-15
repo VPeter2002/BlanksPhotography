@@ -4,41 +4,47 @@
 //   mappa  : a Supabase Storage mappa neve a "Blanka pics" bucketben
 //   cim    : ami az oldalon megjelenik
 //   borito : a borito-kep alapneve kiterjesztes nelkul (ebbol lesz -thumb.jpg/webp)
-//   db     : hany kep van a forgatasban (a kartyan jelenik meg)
+//   szo    : opcionalis. A kep-feliratban hasznalt fotozas-tipus, ha a sorozat
+//            mas tipusu, mint a kategoriaja (pl. paros sorozat a jegyes alatt).
+//
+// A kepek SZAMA tudatosan nem szerepel itt: Blanka kerese, hogy a sorozat
+// darabszama ne legyen kiirva sehol az oldalon.
 window.FORGATASOK = {
   eskuvo: {
     cim: 'Esküvői Történetek',
     oldal: 'wedding-gallery.html',
     lista: [
-      { mappa: 'saratamas_eskuvo',   cim: 'Sára és Tamás',  borito: 'Sara__Tamas_361' , db: 213 },
-      { mappa: 'annaesbalint_eskuvo', cim: 'Anna és Bálint', borito: 'Anna_Balint_136' , db: 56 },
-      { mappa: 'diaesakos_eskuvo',    cim: 'Dia és Ákos',    borito: 'Dia_Akos_106' , db: 50 }
+      { mappa: 'saratamas_eskuvo',   cim: 'Sára és Tamás',  borito: 'Sara__Tamas_361' },
+      { mappa: 'annaesbalint_eskuvo', cim: 'Anna és Bálint', borito: 'Anna_Balint_136' },
+      { mappa: 'diaesakos_eskuvo',    cim: 'Dia és Ákos',    borito: 'Dia_Akos_106' }
     ]
   },
+  // Jegyes es paros egy kategoria, Blanka kerese (2026-10-14).
   jegyes: {
-    cim: 'Jegyes Fotózások',
+    cim: 'Jegyes és Páros Fotózások',
     oldal: 'engagement-gallery.html',
     lista: [
-      { mappa: 'arnikaeszsolt_jegyes', cim: 'Arnika és Zsolt', borito: 'jegyes_11' , db: 107 },
-      { mappa: 'kiraesbence_jegyes',   cim: 'Kira és Bence',   borito: 'K_B_jegyes_105' , db: 25 },
-      { mappa: 'klauesakos_jegyes',    cim: 'Klau és Ákos',    borito: 'klau_akos12' , db: 20 },
-      { mappa: 'saraespeti',          cim: 'Sára és Peti',    borito: 'S_P_11', db: 25 }
+      { mappa: 'arnikaeszsolt_jegyes', cim: 'Arnika és Zsolt', borito: 'jegyes_11' },
+      { mappa: 'kiraesbence_jegyes',   cim: 'Kira és Bence',   borito: 'K_B_jegyes_105' },
+      { mappa: 'klauesakos_jegyes',    cim: 'Klau és Ákos',    borito: 'klau_akos12' },
+      { mappa: 'saraespeti',           cim: 'Sára és Peti',    borito: 'S_P_11' },
+      { mappa: 'sabatamas_paros',      cim: 'Tomó és Fani',    borito: 'saba_tomo_fani1', szo: 'páros' }
     ]
   },
   kismama: {
     cim: 'Kismama Fotózások',
     oldal: 'maternity-gallery.html',
     lista: [
-      { mappa: 'saramarnagyonvarnak_kismama', cim: 'Sára',               borito: 'Sara_66' , db: 139 },
-      { mappa: 'nikimilaneszeteny_kismama',   cim: 'Niki, Milán és Zetény', borito: 'Zeteny_106' , db: 25 }
+      { mappa: 'saramarnagyonvarnak_kismama', cim: 'Sára',                  borito: 'Sara_66' },
+      { mappa: 'nikimilaneszeteny_kismama',   cim: 'Niki, Milán és Zetény', borito: 'Zeteny_106' }
     ]
   },
-  paros: {
-    cim: 'Páros Fotózások',
-    oldal: 'couple-gallery.html',
-    lista: [
-      { mappa: 'sabatamas_paros', cim: 'Tomó és Fani', borito: 'saba_tomo_fani1' , db: 154 }
-    ]
+  // Uj kategoria, Blanka kerese. Amint a csaladi sorozat kepei felkerulnek a
+  // bucketbe, csak egy sort kell ide felvenni, es a kartya automatikusan megjelenik.
+  csalad: {
+    cim: 'Családi Fotózások',
+    oldal: 'family-gallery.html',
+    lista: []
   }
 };
 

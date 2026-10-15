@@ -137,9 +137,12 @@
     // A kepek felirata a katalogusbol jon. Korabban minden galeriaban fixen
     // "Eskuvoi pillanat" allt, tehat a kismama- es paros-forgatasoknal minden
     // kep alt-szovege es lightbox-felirata rossz fotozast mondott.
-    const KATEGORIA_SZO = { eskuvo: 'esküvői', jegyes: 'jegyes', kismama: 'kismama', paros: 'páros' };
+    // A sorozat sajat `szo` erteke eros a kategoriajanal: igy a jegyes kategoriaba
+    // kerult paros sorozat felirata is "paros fotozas" marad.
+    const KATEGORIA_SZO = { eskuvo: 'esküvői', jegyes: 'jegyes', kismama: 'kismama', paros: 'páros', csalad: 'családi' };
+    const feliratSzo = forgatas ? (forgatas.szo || KATEGORIA_SZO[forgatas.kategoria]) : '';
     const kepFelirat = forgatas
-        ? forgatas.cim + (KATEGORIA_SZO[forgatas.kategoria] ? ', ' + KATEGORIA_SZO[forgatas.kategoria] + ' fotózás' : '')
+        ? forgatas.cim + (feliratSzo ? ', ' + feliratSzo + ' fotózás' : '')
         : 'Fotó';
     // A JAVÍTÁS: supabaseClient névre kereszteltük a változót
     const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
