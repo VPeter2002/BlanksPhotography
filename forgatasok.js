@@ -36,15 +36,18 @@ window.FORGATASOK = {
     oldal: 'maternity-gallery.html',
     lista: [
       { mappa: 'saramarnagyonvarnak_kismama', cim: 'Sára',                  borito: 'Sara_66' },
-      { mappa: 'nikimilaneszeteny_kismama',   cim: 'Niki, Milán és Zetény', borito: 'Zeteny_106' }
+      { mappa: 'nikimilaneszeteny_kismama',   cim: 'Niki, Milán és Zetény', borito: 'Zeteny_106' },
+      { mappa: 'petraestibi_kismama',         cim: 'Petra és Tibi',         borito: 'pocak_25' }
     ]
   },
-  // Uj kategoria, Blanka kerese. Amint a csaladi sorozat kepei felkerulnek a
-  // bucketbe, csak egy sort kell ide felvenni, es a kartya automatikusan megjelenik.
+  // Uj kategoria, Blanka kerese. Az elso ket sorozat 2026-10-15-en kerult fel.
   csalad: {
     cim: 'Családi Fotózások',
     oldal: 'family-gallery.html',
-    lista: []
+    lista: [
+      { mappa: 'csanad_csalad',      cim: 'Csanád is megérkezett', borito: 'Csanad_38' },
+      { mappa: 'balikocsalad_csalad', cim: 'Balikó család',        borito: 'negyenlesznek98' }
+    ]
   }
 };
 
