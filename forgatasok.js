@@ -33,7 +33,7 @@ window.FORGATASOK = {
       { mappa: 'kiraesbence_jegyes',   cim: 'Kira és Bence',   borito: 'K_B_jegyes_105', w: 1280, h: 853 },
       { mappa: 'klauesakos_jegyes',    cim: 'Klau és Ákos',    borito: 'klau_akos12', w: 1280, h: 1920 },
       { mappa: 'saraespeti',           cim: 'Sára és Peti',    borito: 'S_P_11', w: 1280, h: 1920 },
-      { mappa: 'sabatamas_paros',      cim: 'Tomó és Fani',    borito: 'saba_tomo_fani1', szo: 'páros', w: 1280, h: 1920 }
+      { mappa: 'sabatamas_paros',      cim: 'Sába és Tomó',    borito: 'saba_tomo_fani1', szo: 'páros', w: 1280, h: 1920 }
     ]
   },
   kismama: {
@@ -53,7 +53,7 @@ window.FORGATASOK = {
       { mappa: 'csanad_csalad',      cim: 'Csanád is megérkezett', borito: 'Csanad_38', w: 1280, h: 1920 },
       { mappa: 'balikocsalad_csalad', cim: 'Balikó család',        borito: 'negyenlesznek98', w: 1280, h: 853 },
       { mappa: 'barnabas_csalad',     cim: 'Érkezik Barnabás',     borito: 'Petrikcsalad_36', w: 1280, h: 853 },
-      { mappa: 'sari_csalad',         cim: 'Sári',                 borito: 'Sari_33', w: 1280, h: 1920 }
+      { mappa: 'sari_csalad',         cim: 'Sári már nagyon várnak', borito: 'Sari_33', w: 1280, h: 1920 }
     ]
   }
 };
