@@ -51,7 +51,9 @@ window.FORGATASOK = {
     oldal: 'family-gallery.html',
     lista: [
       { mappa: 'csanad_csalad',      cim: 'Csanád is megérkezett', borito: 'Csanad_38', w: 1280, h: 1920 },
-      { mappa: 'balikocsalad_csalad', cim: 'Balikó család',        borito: 'negyenlesznek98', w: 1280, h: 853 }
+      { mappa: 'balikocsalad_csalad', cim: 'Balikó család',        borito: 'negyenlesznek98', w: 1280, h: 853 },
+      { mappa: 'barnabas_csalad',     cim: 'Érkezik Barnabás',     borito: 'Petrikcsalad_36', w: 1280, h: 853 },
+      { mappa: 'sari_csalad',         cim: 'Sári',                 borito: 'Sari_33', w: 1280, h: 1920 }
     ]
   }
 };
