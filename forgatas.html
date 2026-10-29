@@ -54,8 +54,6 @@
         <h1 class="section-title" id="forgatas-cim">Fotózás</h1>
         <div class="stories-grid">
             <div class="story-bucket">
-                <h3 class="story-title" id="forgatas-alcim"></h3>
-                
                 <div class="subphoto-grid" id="photo-container"></div>
             </div>
         </div>
@@ -130,15 +128,15 @@
         const folderName = forgatas ? forgatas.mappa : '';
 
         if (forgatas) {
+            // Csak a h1 cim all a lapon: a korabbi "<cim> fotói" alcim ugyanazt
+            // mondta megegyszer, ket sorral lejjebb (Peti kerese, 2026-10-29).
             document.getElementById('forgatas-cim').textContent = forgatas.cim;
-            document.getElementById('forgatas-alcim').textContent = forgatas.cim + ' fotói';
             document.title = forgatas.cim + " | Blank's Photography";
             const vissza = document.getElementById('vissza-link');
             vissza.href = forgatas.vissza;
             vissza.textContent = '← Vissza a fotózásokhoz';
         } else {
             document.getElementById('forgatas-cim').textContent = 'Nem találjuk ezt a fotózást';
-            document.getElementById('forgatas-alcim').textContent = '';
         }
 
     // A kepek felirata a katalogusbol jon. Korabban minden galeriaban fixen

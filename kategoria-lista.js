@@ -10,6 +10,10 @@
     return `${BUCKET_URL}/${encodeURIComponent(mappa)}/${encodeURIComponent(borito)}-medium.${kiterjesztes}`;
   }
 
+  // Ugyanaz a szohasznalat, mint a forgatas.html kep-feliratainal: az alt-szoveg
+  // a valodi fotozas-tipust mondja, nem altalanos "fotó"-t.
+  const SZO = { eskuvo: 'esküvői', jegyes: 'jegyes', kismama: 'kismama', csalad: 'családi' };
+
   function rendereld(kategoriaKulcs) {
     const kat = (window.FORGATASOK || {})[kategoriaKulcs];
     const cel = document.getElementById('forgatas-lista');
@@ -33,13 +37,25 @@
       kartya.className = 'category-card';
       kartya.href = 'forgatas.html?mappa=' + encodeURIComponent(f.mappa);
 
-      const kep = document.createElement('div');
-      kep.className = 'category-image';
-      kep.style.backgroundImage = `url('${jpg}')`;
-      // A masodik ertekadas felulirja az elsot ott, ahol az image-set tamogatott.
-      kep.style.backgroundImage =
-        `image-set(url('${webp}') type('image/webp'), url('${jpg}') type('image/jpeg'))`;
-      if (!kep.style.backgroundImage) kep.style.backgroundImage = `url('${jpg}')`;
+      // Valodi <img>, nem hatterkep: a kartya a kep aranyat veszi fel, tehat
+      // semmit nem vagunk le belole (2026-10-29, Peti kerese). A w/h a
+      // katalogusbol jon, hogy a hely elore le legyen foglalva.
+      const kep = document.createElement('picture');
+      const forras = document.createElement('source');
+      forras.type = 'image/webp';
+      forras.srcset = webp;
+      const img = document.createElement('img');
+      img.className = 'category-image';
+      img.src = jpg;
+      // A sorozat sajat `szo` erteke eros a kategoriajanal (pl. paros sorozat a
+      // jegyes kategoriaban) -- ugyanaz a szabaly, mint a forgatas.html-ben.
+      const szo = f.szo || SZO[kategoriaKulcs];
+      img.alt = f.cim + (szo ? ', ' + szo + ' fotózás' : '');
+      img.loading = 'lazy';
+      img.decoding = 'async';
+      if (f.w && f.h) { img.width = f.w; img.height = f.h; }
+      kep.appendChild(forras);
+      kep.appendChild(img);
 
       const info = document.createElement('div');
       info.className = 'category-info';
