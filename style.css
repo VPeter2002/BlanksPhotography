@@ -536,16 +536,10 @@ nav {
     transition: transform 0.6s ease;
 }
 
-.category-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    /* Egy hasabban a kartya szelesebb, a felirat vilagos kepreszletre is eshet:
-       ezert erosebb a also fatyol, hogy a sotet szoveg mindenhol olvashato legyen. */
-    background: linear-gradient(to top, rgba(251, 249, 246, 0.95) 0%, rgba(251, 249, 246, 0.7) 22%, rgba(251, 249, 246, 0) 60%);
-    z-index: 1;
-    transition: background 0.4s ease;
-}
+/* A kep alsó reszere korabban egy krem szinu fatyol (::before gradiens) kerult,
+   mert a sorozat cime a kepre volt kiirva. Peti kerese 2026-10-30: a fatyol le.
+   Ezert a cim kikerult a kep ALA, a kartya sajat beige hatterere (merve:
+   #5A534A a #E5D7C8-on 5,37:1, tehat AA megfelel), es nem kell semmi a kepre. */
 
 .category-card:hover {
     border-color: var(--accent-rose);
@@ -567,27 +561,19 @@ nav {
 
 .category-card--soon .category-image { background: none; }
 
-.category-card--soon::before { background: none; }
-
 .category-card--soon .category-info {
-    top: 50%;
-    bottom: auto;
-    transform: translateY(-50%);
     padding: 0 20px;
 }
 
 .category-card--soon .category-info p { color: var(--accent-text); }
 
 .category-info {
-    position: absolute;
-    bottom: 0;
-    left: 0;
+    /* Normal folyamban, a kep alatt: igy nincs szukseg fatyolra a fotón. */
     width: 100%;
-    padding: 30px 20px;
+    padding: 20px;
     background: transparent;
     text-align: center;
     color: var(--text-dark);
-    z-index: 2;
 }
 
 /* Ugyanaz a betutipus es keptzes, mint a navbarban: Playfair Display,
