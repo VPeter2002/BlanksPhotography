@@ -16,7 +16,7 @@
 // darabszama ne legyen kiirva sehol az oldalon.
 window.FORGATASOK = {
   eskuvo: {
-    cim: 'Esküvői Történetek',
+    cim: 'Esküvői Fotózások',
     oldal: 'wedding-gallery.html',
     lista: [
       { mappa: 'saratamas_eskuvo',   cim: 'Sára és Tamás',  borito: 'Sara__Tamas_361', w: 1280, h: 1920 },
